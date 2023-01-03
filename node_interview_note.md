@@ -59,14 +59,18 @@ Step 05: Run the app
 >Create Database:
 
 ```
-var MongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
 var url = "mongodb://localhost:27017/mydb";
+var dotenv = require('dotenv');
 
-MongoClient.connect(url, function(err, db) {
-  if (err) throw err;
-  console.log("Database created!");
-  db.close();
+dotenv.config();
+void (async ()=>{
+  await mongoose.connect(url, {
+  uer: process.env.USER_NAME,
+  password:process.env.PASSWORD
 });
+})();
+
 ```
 
 >Differentiate between spawn and fork methods in Nodejs?
