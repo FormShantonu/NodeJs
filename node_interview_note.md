@@ -233,24 +233,6 @@ Syntax:
 const module = require('module_name');
 ```
 
->The following table lists some of the important core modules in Node.js.
-
-| Name | Description |
-| ---- |:-----------:|
-| Assert| It is used by Node.js for testing itself. It can be accessed with require('assert'). |
-| Buffer| It is used to perform operations on raw bytes of data which reside in memory. It can be accessed with require('buffer') |
-| Child Process | It is used by node.js for managing child processes. It can be accessed with require('child_process'). |
-| Cluster | This module is used by Node.js to take advantage of multi-core systems, so that it can handle more load. It can be accessed with require('cluster'). |
-| Console | It is used to write data to console. Node.js has a Console object which contains functions to write data to console. It can be accessed with require('console'). |
-| Crypto | It is used to support cryptography for encryption and decryption. It can be accessed with require('crypto'). |
-| HTTP | It includes classes, methods and events to create Node.js http server. |
-| URL | It includes methods for URL resolution and parsing. |
-| Query String | It includes methods to deal with query string. |
-| Path | It includes methods to deal with file paths. |
-| File System | It includes classes, methods, and events to work with file I/O. |
-| Util | It includes utility functions useful for programmers. |
-| Zlib | It is used to compress and decompress data. It can be accessed with require('zlib'). |
-
 >Explain Buffer data type in Node.js?
 
 Node.js includes an additional data type called Buffer ( not available in browser's JavaScript ). Buffer is mainly used to store binary data, while reading from a file or receiving packets over the network.
@@ -335,6 +317,24 @@ It specifies the filename of the code being executed. This is the resolved absol
 console.log(__filename);
 ```
 
+>The following table lists some of the important core modules in Node.js.
+
+| Name | Description |
+| ---- |:-----------:|
+| Assert| It is used by Node.js for testing itself. It can be accessed with require('assert'). |
+| Buffer| It is used to perform operations on raw bytes of data which reside in memory. It can be accessed with require('buffer') |
+| Child Process | It is used by node.js for managing child processes. It can be accessed with require('child_process'). |
+| Cluster | This module is used by Node.js to take advantage of multi-core systems, so that it can handle more load. It can be accessed with require('cluster'). |
+| Console | It is used to write data to console. Node.js has a Console object which contains functions to write data to console. It can be accessed with require('console'). |
+| Crypto | It is used to support cryptography for encryption and decryption. It can be accessed with require('crypto'). |
+| HTTP | It includes classes, methods and events to create Node.js http server. |
+| URL | It includes methods for URL resolution and parsing. |
+| Query String | It includes methods to deal with query string. |
+| Path | It includes methods to deal with file paths. |
+| File System | It includes classes, methods, and events to work with file I/O. |
+| Util | It includes utility functions useful for programmers. |
+| Zlib | It is used to compress and decompress data. It can be accessed with require('zlib'). |
+
 ### NODE.JS FILE SYSTEM ###
 
 >How Node.js read the content of a file?
@@ -374,6 +374,7 @@ http.createServer(function (req, res) {
   });
 }).listen(3000);
 ```
+
 >How many types of streams are present in node.js?
 
 Streams are objects that let you read data from a source or write data to a destination in continuous fashion. There are four types of streams
@@ -418,6 +419,7 @@ readerStream.on("error", function (err) {
 });
 ```
 >2. Writing to a Stream:
+
 ```
 const fs = require("fs");
 const data = "File writing to a stream example";
@@ -480,6 +482,108 @@ Some of the use cases of Node.js streams include:
 * Reading a file that's larger than the free memory space, because it's broken into smaller chunks and processed by streams. For example, a browser processes videos from streaming platforms like Netflix in small chunks, making it possible to watch videos immediately without having to download them all at once.
 * Reading large log files and writing selected parts directly to another file without downloading the source file. For example, you can go through traffic records spanning multiple years to extract the busiest day in a given year and save that data to a new file.
 
+## Cluster modules ##
+
+>What is cluster?
+
+Cluster module provide you the way of creating child process that run the simultaneously and share the same server port.
+
+syntax: var cluster = require('cluster');
+
+So basicaly if we want to distribute our incomeing threads by one server base on our server cpu capacity then we can use cluster.
+
+for that create 3 file index.js for normal server runing, server.js for server define and cluster.js for destribute the server in multiper worker as copy of the maine one.
+
+index.js :
+
+server.js :
+
+```
+
+```
+cluster.js :
+
+## HTTP Module ##
+
+Node.js has a built-in module called HTTP, which allows Node.js to transfer data over the Hyper Text Transfer Protocol (HTTP).
+
+To include the HTTP module, use the require() method:
+
+```
+var http = require('http');
+```
+
+Node.js as a Web Server :
+
+The HTTP module can create an HTTP server that listens to server ports and gives a response back to the client.
+
+Use the createServer() method to create an HTTP server:
+
+```
+var http = require('http');
+// create a server object
+
+http.createServer(function(req,res){
+  res.write('Hello world');
+  res.end();
+}).listen(3000);
+```
+
+Add an HTTP Header :
+
+If the response from the HTTP server is supposed to be displayed as HTML, you should include an HTTP header with the correct content type:
+
+```
+var http = require('http');
+
+http.createServer(function(req,res){
+  res.writeHead(200,{'Contain-type':'text/html'});
+  res.write('Hello World');
+  res.end();
+});
+
+```
+
+Read the Query String :
+
+The function passed into the http.createServer() has a req argument that represents the request from the client, as an object (http.IncomingMessage object).
+
+```
+var http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write(req.url);
+  res.end();
+}).listen(8080);
+```
+
+### URL Module ###
+
+The Built-in URL Module :
+
+The URL module splits up a web address into readable parts.
+
+To include the URL module, use the require() method:
+
+```
+var url = require('url');
+```
+Parse an address with the url.parse() method, and it will return a URL object with each part of the address as properties:
+
+```
+var url = require('url');
+var adr = 'http://localhost:3000/default.htm?year=2022&month=06';
+var parseData = url.parse(adr);
+
+console.log(parseData.host);
+
+console.log(parseData.pathname)
+
+console.log(parseData.search);
+
+var qdata = q.query; // return object {year:2022, month:06}
+console.log(qdata); //  return 06
+```
 ### NODE.JS RESTFUL API ###
 
 >Explain RESTful Web Services in Node.js?
@@ -592,6 +696,105 @@ app.get('/employees', (req, res, next) => {
 
 ```
 
+
+>How does an Express code look like?
+
+The express.js program is saved with ".js" extension.
+
+```
+var express = require('express');    
+var app = express();    
+app.get('/', function (req, res) {    
+  res.send('Welcome to JavaTpoint!');    
+});    
+var server = app.listen(8000, function () {    
+  var host = server.address().address;    
+  var port = server.address().port;    
+  console.log('Example app listening at http://%s:%s', host, port);    
+});
+```
+
+>Which are the arguments available to an Express JS route handler function?
+
+Following are the arguments that are available to an Express.js route handler-function:
+
+* Req: the request object
+* Res: the response object
+* Next (optional): It is a function employed to pass management to one of the above route handlers.
+
+>In Express how many type of middleware exist?
+
+An Express application can use the following types of middleware: 
+
+* Application-level middleware. 
+
+* Router-level middleware. 
+
+* Built-in Middleware
+
+* Error-handling middleware
+
+* Third-party Middleware
+
+
+>What is Middleware?
+
+The middleware in node. js is a function that will have all the access for requesting an object, responding to an object, and moving to the next middleware function in the application request-response cycle.
+
+```
+const express = require('express');
+const app = express;
+
+const myLog = function(res,req,next){
+  console.log('Hello My Middleware.');
+  next();
+}
+
+app.use(myLog);
+
+app.get('/',(req, res){
+  console.log('Hello world!!');
+});
+
+app.listen(3000,function(req,res){
+  console.log('Server runing at 3000');
+})
+
+```
+
+Application-level middleware: The application-level middleware method is used to bind to the app object using app.use() method. It applies on all routes.
+
+```
+//This middleware will execute for each route.  
+app.use(function (req, res, next) {  
+  console.log('Current Time:', Date.now())  
+  next()  
+}) 
+```
+
+Router-level Middleware: The router-level Middleware is used to bind to a specific instance of express.Router().Built-in Middleware: The built-in Middleware was introduced with version 4.x. It ends the dependency on Connect.
+
+There are the following built-in middleware functions in Express.js:
+
+* static: It is used to serve static assets such as HTML files, images, etc.
+
+* json: It is used to parse the incoming requests with JSON payloads. It is available with Express 4.16.0+
+
+* urlencoded: It is used to parse the incoming requests with URL-encoded payloads. It is available with Express 4.16.0+
+
+Third-party Middleware: There are many third-party middleware available such as:
+
+* Body-parser
+
+* Cookie-parser
+
+* Mongoose
+
+* Sequelize
+
+* Cors
+
+* Express-validator
 
 
 
