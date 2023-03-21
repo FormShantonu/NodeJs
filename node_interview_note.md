@@ -705,6 +705,22 @@ app.get('/employees', (req, res, next) => {
 
 ```
 
+### Node js Error Handel ###
+
+>How we can handle error in node js?
+
+In tradition way we handel error by try and catch mathod but in asynchonus method we have to use process.no()
+
+```
+process.on('error',function(error){
+  console.log('There is an error!');
+});
+
+```
+
+Other waise we can use the defferent module import and execute.
+
+### Express js ###
 
 >How does an Express code look like?
 
