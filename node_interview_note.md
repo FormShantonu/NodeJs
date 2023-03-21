@@ -19,7 +19,7 @@ The Node.js runtime is the software stack responsible for installing your web se
 
 >What is Node.js Process Model?
 
-Node.js runs in a single process and the application code runs in a single thread and thereby needs fewer resources than other platforms. All the user requests to your web application will be handled by a single thread and all the I/O work or long running job is performed asynchronously for a particular request. So, this single thread doesn't have to wait for the request to complete and is free to handle the next request. When asynchronous I/O work completes then it processes the request further and sends the response.
+Node. js provides the facility to get process information such as process id, architecture, platform, version, release, uptime, upu usage etc. It can also be used to kill process, set uid, set groups, unmask etc. The process is a global object, an instance of EventEmitter, can be accessed from anywhere.
 
 >Single Threaded Event Loop Model Processing Steps
 
@@ -103,10 +103,6 @@ void (async ()=>{
 spawn() It creates a new process through a command rather than running on the same node process.
 
 fork() It makes several individual processes (child processes) but all of them run on the same node process as the parent.
-
->Explain the purpose of the ExpressJS package.
-
-Express.js is a framework built on top of Node.js that facilitates the management of the flow of data between server and routes in server-side applications. It is a lightweight and flexible framework that provides a wide range of features required for the web as well as mobile application development. Express.js is developed on the middleware module of Node.js called connect. The connect module further makes use of http module to communicate with Node.js. Thus, if you are working with any of the connect based middleware modules, then you can easily integrate with Express.js.
 
 ### Node js child process ###
 
@@ -721,6 +717,10 @@ process.on('error',function(error){
 Other waise we can use the defferent module import and execute.
 
 ### Express js ###
+
+>Explain the purpose of the ExpressJS package.
+
+Express.js is a framework built on top of Node.js that facilitates the management of the flow of data between server and routes in server-side applications. It is a lightweight and flexible framework that provides a wide range of features required for the web as well as mobile application development. Express.js is developed on the middleware module of Node.js called connect. The connect module further makes use of http module to communicate with Node.js. Thus, if you are working with any of the connect based middleware modules, then you can easily integrate with Express.js.
 
 >How does an Express code look like?
 
