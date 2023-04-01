@@ -17,10 +17,6 @@ Event-driven programming is used to synchronize the occurrence of multiple event
 
 The Node.js runtime is the software stack responsible for installing your web service's code and its dependencies and running your service.
 
->What is Node.js Process Model?
-
-Node. js provides the facility to get process information such as process id, architecture, platform, version, release, uptime, upu usage etc. It can also be used to kill process, set uid, set groups, unmask etc. The process is a global object, an instance of EventEmitter, can be accessed from anywhere.
-
 >Single Threaded Event Loop Model Processing Steps
 
 Clients Send request to Web Server.
@@ -103,6 +99,107 @@ void (async ()=>{
 spawn() It creates a new process through a command rather than running on the same node process.
 
 fork() It makes several individual processes (child processes) but all of them run on the same node process as the parent.
+
+
+### What are the core modules of Node.js? ###
+
+Node.js has a set of core modules that are part of the platform and come with the Node.js installation. These modules can be loaded into the program by using the require function.
+
+Syntax:
+```
+const module = require('module_name');
+```
+
+>Explain Buffer data type in Node.js?
+
+Node.js includes an additional data type called Buffer ( not available in browser's JavaScript ). Buffer is mainly used to store binary data, while reading from a file or receiving packets over the network.
+
+Example:
+
+```
+/**
+ * Buffer Data Type
+ */
+let b = new Buffer(10000);
+let str = "----------";
+
+b.write(str); 
+console.log( str.length ); // 10
+console.log( b.length ); // 10000
+```
+>What are the global objects of Node.js?
+
+Node.js Global Objects are the objects that are available in all modules. Global Objects are built-in objects that are part of the JavaScript and can be used directly in the application without importing any particular module.
+
+These objects are modules, functions, strings and object itself as explained below.
+
+1. global:
+
+It is a global namespace. Defining a variable within this namespace makes it globally accessible.
+
+```
+var myvar;
+```
+
+2. process:
+
+It is an inbuilt global object that is an instance of EventEmitter used to get information on current process. It can also be accessed using require() explicitly.
+
+3. console:
+
+It is an inbuilt global object used to print to stdout and stderr.
+
+```
+console.log("Hello World"); // Hello World
+
+```
+4. setTimeout(), clearTimeout(), setInterval(), clearInterval():
+
+The built-in timer functions are globals
+
+```
+function printHello() {
+   console.log( "Hello, World!");
+}
+
+// Now call above function after 2 seconds
+var timeoutObj = setTimeout(printHello, 2000);
+```
+5. __dirname:
+
+It is a string. It specifies the name of the directory that currently contains the code.
+```
+console.log(__dirname);
+```
+6. __filename:
+It specifies the filename of the code being executed. This is the resolved absolute path of this code file. The value inside a module is the path to that module file.
+
+```
+console.log(__filename);
+```
+
+>The following table lists some of the important core modules in Node.js.
+
+| Name | Description |
+| ---- |:-----------:|
+| Assert| It is used by Node.js for testing itself. It can be accessed with require('assert'). |
+| Buffer| It is used to perform operations on raw bytes of data which reside in memory. It can be accessed with require('buffer') |
+| Child Process | It is used by node.js for managing child processes. It can be accessed with require('child_process'). |
+| Cluster | This module is used by Node.js to take advantage of multi-core systems, so that it can handle more load. It can be accessed with require('cluster'). |
+| Console | It is used to write data to console. Node.js has a Console object which contains functions to write data to console. It can be accessed with require('console'). |
+| Crypto | It is used to support cryptography for encryption and decryption. It can be accessed with require('crypto'). |
+| HTTP | It includes classes, methods and events to create Node.js http server. |
+| URL | It includes methods for URL resolution and parsing. |
+| Query String | It includes methods to deal with query string. |
+| Path | It includes methods to deal with file paths. |
+| File System | It includes classes, methods, and events to work with file I/O. |
+| Util | It includes utility functions useful for programmers. |
+| Zlib | It is used to compress and decompress data. It can be accessed with require('zlib'). |
+
+
+>What is Node.js Process Model?
+
+Node. js provides the facility to get process information such as process id, architecture, platform, version, release, uptime, upu usage etc. It can also be used to kill process, set uid, set groups, unmask etc. The process is a global object, an instance of EventEmitter, can be accessed from anywhere.
 
 ### Node js child process ###
 
@@ -245,100 +342,6 @@ server.on('request', (request, response) => {
 
 server.listen(3000);
 ```
-### What are the core modules of Node.js? ###
-
-Node.js has a set of core modules that are part of the platform and come with the Node.js installation. These modules can be loaded into the program by using the require function.
-
-Syntax:
-```
-const module = require('module_name');
-```
-
->Explain Buffer data type in Node.js?
-
-Node.js includes an additional data type called Buffer ( not available in browser's JavaScript ). Buffer is mainly used to store binary data, while reading from a file or receiving packets over the network.
-
-Example:
-
-```
-/**
- * Buffer Data Type
- */
-let b = new Buffer(10000);
-let str = "----------";
-
-b.write(str); 
-console.log( str.length ); // 10
-console.log( b.length ); // 10000
-```
->What are the global objects of Node.js?
-
-Node.js Global Objects are the objects that are available in all modules. Global Objects are built-in objects that are part of the JavaScript and can be used directly in the application without importing any particular module.
-
-These objects are modules, functions, strings and object itself as explained below.
-
-1. global:
-
-It is a global namespace. Defining a variable within this namespace makes it globally accessible.
-
-```
-var myvar;
-```
-
-2. process:
-
-It is an inbuilt global object that is an instance of EventEmitter used to get information on current process. It can also be accessed using require() explicitly.
-
-3. console:
-
-It is an inbuilt global object used to print to stdout and stderr.
-
-```
-console.log("Hello World"); // Hello World
-
-```
-4. setTimeout(), clearTimeout(), setInterval(), clearInterval():
-
-The built-in timer functions are globals
-
-```
-function printHello() {
-   console.log( "Hello, World!");
-}
-
-// Now call above function after 2 seconds
-var timeoutObj = setTimeout(printHello, 2000);
-```
-5. __dirname:
-
-It is a string. It specifies the name of the directory that currently contains the code.
-```
-console.log(__dirname);
-```
-6. __filename:
-It specifies the filename of the code being executed. This is the resolved absolute path of this code file. The value inside a module is the path to that module file.
-
-```
-console.log(__filename);
-```
-
->The following table lists some of the important core modules in Node.js.
-
-| Name | Description |
-| ---- |:-----------:|
-| Assert| It is used by Node.js for testing itself. It can be accessed with require('assert'). |
-| Buffer| It is used to perform operations on raw bytes of data which reside in memory. It can be accessed with require('buffer') |
-| Child Process | It is used by node.js for managing child processes. It can be accessed with require('child_process'). |
-| Cluster | This module is used by Node.js to take advantage of multi-core systems, so that it can handle more load. It can be accessed with require('cluster'). |
-| Console | It is used to write data to console. Node.js has a Console object which contains functions to write data to console. It can be accessed with require('console'). |
-| Crypto | It is used to support cryptography for encryption and decryption. It can be accessed with require('crypto'). |
-| HTTP | It includes classes, methods and events to create Node.js http server. |
-| URL | It includes methods for URL resolution and parsing. |
-| Query String | It includes methods to deal with query string. |
-| Path | It includes methods to deal with file paths. |
-| File System | It includes classes, methods, and events to work with file I/O. |
-| Util | It includes utility functions useful for programmers. |
-| Zlib | It is used to compress and decompress data. It can be accessed with require('zlib'). |
 
 ### NODE.JS FILE SYSTEM ###
 
@@ -354,7 +357,12 @@ Read files
 * Delete files
 * Rename files
 
+>Read Files
+
+The fs.readFile() method is used to read files on your computer.
+
 Example: Read Files
+
 ```
 <!-- index.html -->
 <html>
@@ -364,13 +372,13 @@ Example: Read Files
 </body>
 </html>
 ```
+
 ```
 /**
  * read_file.js
  */
 const http = require('http');
 const fs = require('fs');
-
 http.createServer(function (req, res) {
   fs.readFile('index.html', function(err, data) {
     res.writeHead(200, {'Content-Type': 'text/html'});
@@ -378,6 +386,191 @@ http.createServer(function (req, res) {
     res.end();
   });
 }).listen(3000);
+```
+>Creat File:
+
+The File System module has methods for creating new files:
+
+* fs.appendFile()
+* fs.open()
+* fs.writeFile()
+
+The fs.appendFile() method appends specified content to a file. If the file does not exist, the file will be created:
+
+```
+var fs = require('fs');
+
+fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
+  if (err) throw err;
+  console.log('Saved!');
+});
+```
+
+The fs.open() method takes a "flag" as the second argument, if the flag is "w" for "writing", the specified file is opened for writing. If the file does not exist, an empty file is created:
+
+```
+var fs = require('fs');
+
+fs.open('mynewfile2.txt', 'w', function (err, file) {
+  if (err) throw err;
+  console.log('Saved!');
+});
+```
+
+The fs.writeFile() method replaces the specified file and content if it exists. If the file does not exist, a new file, containing the specified content, will be created:
+
+```
+var fs = require('fs');
+
+fs.writeFile('mynewfile3.txt', 'Hello content!', function (err) {
+  if (err) throw err;
+  console.log('Saved!');
+});
+```
+
+>Update Files
+
+The File System module has methods for updating files:
+
+fs.appendFile()
+fs.writeFile()
+
+>Delete Files
+To delete a file with the File System module,  use the fs.unlink() method.
+
+The fs.unlink() method deletes the specified file:
+
+```
+var fs = require('fs');
+
+fs.unlink('mynewfile2.txt', function (err) {
+  if (err) throw err;
+  console.log('File deleted!');
+});
+```
+
+>Rename Files
+
+To rename a file with the File System module,  use the fs.rename() method.
+
+The fs.rename() method renames the specified file:
+
+```
+var fs = require('fs');
+
+fs.rename('mynewfile1.txt', 'myrenamedfile.txt', function (err) {
+  if (err) throw err;
+  console.log('File Renamed!');
+});
+```
+
+## Cluster modules ##
+
+>What is cluster?
+
+Cluster module provide you the way of creating child process that run the simultaneously and share the same server port.
+
+syntax: var cluster = require('cluster');
+
+So basicaly if we want to distribute our incomeing threads by one server base on our server cpu capacity then we can use cluster.
+
+for that create 3 file index.js for normal server runing, server.js for server define and cluster.js for destribute the server in multiper worker as copy of the maine one.
+
+index.js :
+
+server.js :
+
+```
+
+```
+cluster.js :
+
+## HTTP Module ##
+
+Node.js has a built-in module called HTTP, which allows Node.js to transfer data over the Hyper Text Transfer Protocol (HTTP).
+
+To include the HTTP module, use the require() method:
+
+```
+var http = require('http');
+```
+
+Node.js as a Web Server :
+
+The HTTP module can create an HTTP server that listens to server ports and gives a response back to the client.
+
+Use the createServer() method to create an HTTP server:
+
+```
+var http = require('http');
+// create a server object
+
+http.createServer(function(req,res){
+  res.write('Hello world');
+  res.end();
+}).listen(3000);
+```
+
+Save the code above in a file called "demo_http.js", and initiate the file:
+
+```
+C:\Users\Your Name>node demo_http.js
+```
+
+Add an HTTP Header :
+
+If the response from the HTTP server is supposed to be displayed as HTML, you should include an HTTP header with the correct content type:
+
+```
+var http = require('http');
+
+http.createServer(function(req,res){
+  res.writeHead(200,{'Contain-type':'text/html'});
+  res.write('Hello World');
+  res.end();
+});
+
+```
+
+Read the Query String :
+
+The function passed into the http.createServer() has a req argument that represents the request from the client, as an object (http.IncomingMessage object).
+
+```
+var http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write(req.url);
+  res.end();
+}).listen(8080);
+```
+
+### URL Module ###
+
+The Built-in URL Module :
+
+The URL module splits up a web address into readable parts.
+
+To include the URL module, use the require() method:
+
+```
+var url = require('url');
+```
+Parse an address with the url.parse() method, and it will return a URL object with each part of the address as properties:
+
+```
+var url = require('url');
+var adr = 'http://localhost:3000/default.htm?year=2022&month=06';
+var parseData = url.parse(adr);
+
+console.log(parseData.host);
+
+console.log(parseData.pathname)
+
+console.log(parseData.search);
+
+var qdata = q.query; // return object {year:2022, month:06}
+console.log(qdata); //  return 06
 ```
 
 >How many types of streams are present in node.js?
@@ -487,108 +680,24 @@ Some of the use cases of Node.js streams include:
 * Reading a file that's larger than the free memory space, because it's broken into smaller chunks and processed by streams. For example, a browser processes videos from streaming platforms like Netflix in small chunks, making it possible to watch videos immediately without having to download them all at once.
 * Reading large log files and writing selected parts directly to another file without downloading the source file. For example, you can go through traffic records spanning multiple years to extract the busiest day in a given year and save that data to a new file.
 
-## Cluster modules ##
+### Node.js Events ###
 
->What is cluster?
+>What is Event in node?
 
-Cluster module provide you the way of creating child process that run the simultaneously and share the same server port.
+Every action on a computer is an event. Like when a connection is made or a file is opened.
 
-syntax: var cluster = require('cluster');
+Objects in Node.js can fire events, like the readStream object fires events when opening and closing a file:
 
-So basicaly if we want to distribute our incomeing threads by one server base on our server cpu capacity then we can use cluster.
+>The EventEmitter Object
 
-for that create 3 file index.js for normal server runing, server.js for server define and cluster.js for destribute the server in multiper worker as copy of the maine one.
+You can assign event handlers to your own events with the EventEmitter object.
 
-index.js :
+In the example below we have created a function that will be executed when a "scream" event is fired.
 
-server.js :
+To fire an event, use the emit() method.
 
-```
 
-```
-cluster.js :
 
-## HTTP Module ##
-
-Node.js has a built-in module called HTTP, which allows Node.js to transfer data over the Hyper Text Transfer Protocol (HTTP).
-
-To include the HTTP module, use the require() method:
-
-```
-var http = require('http');
-```
-
-Node.js as a Web Server :
-
-The HTTP module can create an HTTP server that listens to server ports and gives a response back to the client.
-
-Use the createServer() method to create an HTTP server:
-
-```
-var http = require('http');
-// create a server object
-
-http.createServer(function(req,res){
-  res.write('Hello world');
-  res.end();
-}).listen(3000);
-```
-
-Add an HTTP Header :
-
-If the response from the HTTP server is supposed to be displayed as HTML, you should include an HTTP header with the correct content type:
-
-```
-var http = require('http');
-
-http.createServer(function(req,res){
-  res.writeHead(200,{'Contain-type':'text/html'});
-  res.write('Hello World');
-  res.end();
-});
-
-```
-
-Read the Query String :
-
-The function passed into the http.createServer() has a req argument that represents the request from the client, as an object (http.IncomingMessage object).
-
-```
-var http = require('http');
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.write(req.url);
-  res.end();
-}).listen(8080);
-```
-
-### URL Module ###
-
-The Built-in URL Module :
-
-The URL module splits up a web address into readable parts.
-
-To include the URL module, use the require() method:
-
-```
-var url = require('url');
-```
-Parse an address with the url.parse() method, and it will return a URL object with each part of the address as properties:
-
-```
-var url = require('url');
-var adr = 'http://localhost:3000/default.htm?year=2022&month=06';
-var parseData = url.parse(adr);
-
-console.log(parseData.host);
-
-console.log(parseData.pathname)
-
-console.log(parseData.search);
-
-var qdata = q.query; // return object {year:2022, month:06}
-console.log(qdata); //  return 06
-```
 ### NODE.JS RESTFUL API ###
 
 >Explain RESTful Web Services in Node.js?
