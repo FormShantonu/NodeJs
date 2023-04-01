@@ -696,6 +696,23 @@ In the example below we have created a function that will be executed when a "sc
 
 To fire an event, use the emit() method.
 
+```
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
+
+// Create event handler
+var myEventHandler = function(){
+    console.log("I called event emitter");
+}
+
+// Assign event handler to event
+eventEmitter.on('scream', myEventHandler);
+
+// Call the event
+
+eventEmitter.emit('scream');
+```
+
 
 
 ### NODE.JS RESTFUL API ###
