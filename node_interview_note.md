@@ -10,7 +10,9 @@ Node. js is a platform built on Chrome's JavaScript runtime for easily building 
 
 >what is  event-driven in node js?
 
-Event-driven programming is used to synchronize the occurrence of multiple events and to make the program as simple as possible. The basic components of an Event-Driven Program are: A callback function ( called an event handler) is called when an event is triggered.
+In event-driven programming, the flow of the program is determined by events that occur in the system, such as user input, network requests, or timer events.
+
+In JavaScript, event-driven programming is based on the concept of callbacks. A callback is a function that is passed as an argument to another function and is executed when a certain event occurs. For example, in a web application, you might have a function that is called when the user clicks a button. This function would be a callback that is executed when the "click" event occurs.
 
 
 >What does the runtime environment mean in Node.js?
@@ -93,13 +95,6 @@ void (async ()=>{
 })();
 
 ```
-
->Differentiate between spawn and fork methods in Nodejs?
-
-spawn() It creates a new process through a command rather than running on the same node process.
-
-fork() It makes several individual processes (child processes) but all of them run on the same node process as the parent.
-
 
 ### What are the core modules of Node.js? ###
 
