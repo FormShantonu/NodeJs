@@ -540,6 +540,60 @@ http.createServer(function (req, res) {
 }).listen(8080);
 ```
 
+>HTTP module call third party api with GET request :
+
+The http module is a built-in module in Node.js that allows you to make HTTP requests and build HTTP servers.
+
+Here is an example of how to make a GET request using the http module:
+
+```
+var http = require('http');
+
+http.get('http://api.example.com',(res)=>{
+    let data = '';
+    res.on('data',(chunk)=>{
+        data+=chunk;
+    });
+    res.on('end',()=>{
+        console.log(Json.parse(data));
+    });
+}).on('error',(error)=>{
+    console.log(error);
+});
+```
+
+>How to make a POST request using the http module ?
+
+```
+var http = require('http');
+
+var option = {
+    method:"POST",
+    header: {"Content-type":"application/json"}
+}
+
+const req =  http.request('http://api.example.com',option,(res)=>{
+    let data = '';
+    res.on('data',(chunk)=>{
+        data+=chunk;
+    });
+    
+    res.on('end',()=>{
+        console.log(JSON.parse(data));
+    })
+});
+
+var postData = JSON.stringify({
+    name:'shantonu',
+    email:'chowdhury.shan@gmail.com'
+});
+
+req.write(postData);
+req.end();
+```
+
+To send data in the POST request, we use the .write() method to write the data to the request stream and then call .end() to complete the request. In this example, we're sending JSON data in the request body.
+
 ### URL Module ###
 
 The Built-in URL Module :
