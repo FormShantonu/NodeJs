@@ -10,7 +10,7 @@ Node. js is a platform built on Chrome's JavaScript runtime for easily building 
 
 >what is  event-driven in node js?
 
-In event-driven programming, the flow of the program is determined by events that occur in the system, such as user input, network requests, or timer events.
+"Event-driven" means actions are triggered by specific events, like a user clicking a button or a sensor detecting motion. It's a way systems respond to occurrences rather than following a fixed sequence.
 
 In JavaScript, event-driven programming is based on the concept of callbacks. A callback is a function that is passed as an argument to another function and is executed when a certain event occurs. For example, in a web application, you might have a function that is called when the user clicks a button. This function would be a callback that is executed when the "click" event occurs.
 
