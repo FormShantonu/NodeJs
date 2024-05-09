@@ -886,6 +886,54 @@ process.on('error',function(error){
 
 Other waise we can use the defferent module import and execute.
 
+### Authentication ###
+
+We actualy working on JWT token for authentication.
+JSON Web Token (JWT) is an open standard that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
+
+> When should you use JSON Web Tokens?
+
+1. Authorization
+2. Information Exchange
+
+> What is the JSON Web Token structure?
+
+In its compact form, JSON Web Tokens consist of three parts separated by dots (.), which are:
+
+* Header
+* Payload
+* Signature
+
+Therefore, a JWT typically looks like the following.
+
+```
+xxxxx.yyyyy.zzzzz
+
+```
+
+Let's break down the different parts.
+
+> Header
+
+The header typically consists of two parts: the type of the token, which is JWT, and the signing algorithm
+
+> Payload
+
+The second part of the token is the payload, which contains the claims. Claims are statements about an entity (typically, the user) and additional data. There are three types of claims: registered, public, and private claims.
+
+  > Registered 
+A set of predefined claims that are not required but are recommended to be used to deliver useful and interoperable claims
+
+  > Public
+Custom claims that developers create to suit their specific needs
+
+  > private 
+Custom claims that developers define to share information between parties who agree to use them
+
+> Signature
+Used to verify the sender of the token and to ensure that the message hasn't been changed
+
+
 ### Express js ###
 
 >Explain the purpose of the ExpressJS package.
