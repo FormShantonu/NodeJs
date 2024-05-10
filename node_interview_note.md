@@ -870,6 +870,10 @@ app.get('/employees', (req, res, next) => {
 })
 
 ```
+> What is the difference between Patch and Put?
+
+* PUT is used for full updates, where the client provides the complete representation of the resource, while PATCH is used for partial updates, where the client provides only the changes to be applied.
+* PUT is idempotent, meaning that making the same request multiple times has the same effect as making it once, while PATCH may not be idempotent depending on the specific modifications applied.
 
 ### Node js Error Handel ###
 
@@ -887,6 +891,8 @@ process.on('error',function(error){
 Other waise we can use the defferent module import and execute.
 
 ### Authentication ###
+
+>JWT Authentication
 
 We actualy working on JWT token for authentication.
 JSON Web Token (JWT) is an open standard that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
@@ -932,6 +938,54 @@ Custom claims that developers define to share information between parties who ag
 
 > Signature
 Used to verify the sender of the token and to ensure that the message hasn't been changed
+
+>O'auth2 mechanism for authentication system
+
+OAuth 2.0 is a popular authorization framework that is widely used for securing APIs and implementing authentication mechanisms in web and mobile applications. When implementing OAuth 2.0 in a Node.js authentication system, you typically follow these steps:
+
+1. Choose an OAuth 2.0 Provider:
+  * Decide on an OAuth 2.0 provider that you want to integrate with, such as Google, Facebook, GitHub, or your own custom OAuth 2.0 server.
+2. Register Your Application:
+  * Register your application with the chosen OAuth 2.0 provider to obtain client credentials (client ID and client secret). This step usually involves creating an application in the provider's developer console and specifying redirect URIs where users will be redirected after authentication.
+3. Install OAuth 2.0 Library:
+  * Install an OAuth 2.0 library for Node.js. Popular libraries include Passport.js with OAuth 2.0 strategies for various providers, oauth2orize, and simple-oauth2.
+4. Configure OAuth 2.0 Strategy:
+  * Configure the OAuth 2.0 strategy for your chosen provider in your Node.js application. This involves setting up the client ID, client secret, callback URL, and other necessary parameters.
+5. Implement Authentication Routes:
+  * Create routes in your Node.js application to handle authentication and authorization flows. These routes typically include endpoints for initiating the OAuth 2.0 authorization process, handling callback redirects, exchanging authorization codes for access tokens, and refreshing tokens if necessary.
+6. Integrate Authentication Middleware:
+  * Integrate authentication middleware into your application's routes to protect resources that require authentication. Middleware like Passport.js can handle user authentication and authorization automatically once configured.
+7. Handle User Data:
+  * Once a user is authenticated, you may receive user profile data from the OAuth 2.0 provider. Store this data in your application's database or session to manage user sessions and personalize user experiences.
+8. Handle Token Expiry and Refresh:
+  * Implement logic to handle token expiry and refresh if using OAuth 2.0's access tokens. This ensures that users can continue accessing protected resources without needing to re-authenticate frequently.
+9. Secure APIs and Resources:
+  * Secure your application's APIs and resources by validating OAuth 2.0 access tokens for each incoming request. Ensure that only authorized users have access to protected endpoints.
+
+>Explain the OAuth 2.0 authentication system
+
+Here's an explanation of how OAuth 2.0 authentication system works:
+
+1. Roles:
+  * Resource Owner: The resource owner is the user who owns the data or resources that the client application wants to access.
+  * Client: The client is the application that wants to access the user's resources. It could be a web application, mobile app, or any other type of application.
+  * Authorization Server: The authorization server is responsible for authenticating the user and issuing access tokens to the client application.
+  * Resource Server: The resource server hosts the protected resources that the client application wants to access on behalf of the user.
+2. Authorization Flow:
+  * The OAuth 2.0 authorization flow typically involves the following steps:
+    1. Authorization Request: The client application redirects the user to the authorization server to request authorization. This usually involves providing a redirect URI where the user will be redirected after granting authorization.
+    2. User Authentication: The user authenticates with the authorization server, providing their credentials if necessary.
+    3. Authorization Grant: Upon successful authentication, the user is prompted to authorize the client application to access their resources. They may be asked to approve scopes indicating the types of access the client is requesting.
+    4. Authorization Response: If the user grants authorization, the authorization server issues an authorization code or access token to the client application and redirects the user back to the client application's redirect URI.
+    5. Token Exchange: The client application exchanges the authorization code for an access token by making a token request to the authorization server.
+    6. Access Resources: The client application uses the access token to access protected resources on the resource server on behalf of the user. The resource server validates the access token and grants access if the token is valid and authorized.
+3. Access Tokens:
+  * Access tokens are short-lived credentials issued by the authorization server that the client application uses to access protected resources on behalf of the user.
+  * Access tokens are typically bearer tokens, meaning that whoever possesses the token can use it to access the resources. Therefore, they should be kept secure and transmitted over HTTPS.
+  * Access tokens may have scopes indicating the specific permissions granted to the client application.
+4. Refresh Tokens (Optional):
+  * In some OAuth 2.0 flows, the authorization server may also issue a refresh token along with the access token. Refresh tokens can be used to obtain new access tokens without requiring the user to re-authenticate.
+  * Refresh tokens are long-lived credentials and should be kept secure, as they can be used to obtain new access tokens.
 
 
 ### Express js ###
@@ -1005,7 +1059,9 @@ app.listen(3000,function(req,res){
 
 ```
 
-Application-level middleware: The application-level middleware method is used to bind to the app object using app.use() method. It applies on all routes.
+>Application-level middleware: 
+
+The application-level middleware method is used to bind to the app object using app.use() method. It applies on all routes.
 
 ```
 //This middleware will execute for each route.  
@@ -1015,7 +1071,9 @@ app.use(function (req, res, next) {
 }) 
 ```
 
-Router-level Middleware: The router-level Middleware is used to bind to a specific instance of express.Router().Built-in Middleware: The built-in Middleware was introduced with version 4.x. It ends the dependency on Connect.
+>Router-level Middleware: 
+
+The router-level Middleware is used to bind to a specific instance of express.Router().Built-in Middleware: The built-in Middleware was introduced with version 4.x. It ends the dependency on Connect.
 
 There are the following built-in middleware functions in Express.js:
 
@@ -1039,5 +1097,42 @@ Third-party Middleware: There are many third-party middleware available such as:
 
 * Express-validator
 
+>How to create custom middleware in express js
 
+Creating custom middleware in Express.js allows you to add additional functionality to your routes and requests. Middleware functions in Express.js have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle (next). Here's how you can create custom middleware in Express.js:
+
+1. Create a Middleware Function:
+Define a function that will act as your middleware. This function should accept three parameters: req, res, and next.
+2. Implement Middleware Logic:
+Write the logic for your middleware function. This could involve tasks such as logging, authentication, parsing request data, modifying the request or response objects, etc.
+3. Call the next() Function:
+Once your middleware logic is complete, call the next() function to pass control to the next middleware function in the stack. If you do not call next(), the request will be left hanging, and the response will not be sent back to the client.
+4. Use Middleware in Your Application:
+To use your custom middleware in your Express.js application, use the app.use() method to mount it to a specific route or globally.
+
+Here's an example of how to create a simple logging middleware in Express.js:
+
+```
+// Define custom middleware function
+const myLogger = (req, res, next) => {
+  console.log('Logging request:', req.method, req.url);
+  next(); // Pass control to the next middleware function
+};
+
+// Mount middleware globally
+app.use(myLogger);
+
+// Mount middleware to a specific route
+app.get('/api/users', myLogger, (req, res) => {
+  // Route logic
+  res.send('List of users');
+});
+
+```
+
+In this example:
+
+* The myLogger middleware function logs the HTTP method and URL of each incoming request.
+* It is mounted globally using app.use() so that it applies to all routes.
+* It is also mounted specifically to the /api/users route, where it will only be executed for requests to that route.
 
