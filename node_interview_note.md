@@ -60,6 +60,61 @@ Using an Interpreter: The interpreter scans the code line by line and converts i
 Using a Compiler: The Compiler scans the entire document and compiles it into highly optimized byte code.
 The V8 engine uses both a compiler and an interpreter and follows just-in-time (JIT) compilation to speed up the execution. JIT compiling works by compiling small portions of code that are just about to be executed. This prevents long compilation time and the code being compiles is only that which is highly likely to run.
 
+>How node js thread  parity the request 
+
+In Node.js, request handling and concurrency are primarily managed through its event-driven architecture and the use of the event loop, rather than traditional threading. However, Node.js also provides ways to work with threads for more complex concurrency needs, such as CPU-bound tasks.
+
+Event Loop and Asynchronous I/O
+
+1. Event Loop: Node.js uses a single-threaded event loop to handle asynchronous operations. The event loop allows Node.js to perform non-blocking I/O operations by offloading these operations to the system's kernel whenever possible.
+
+2. Callbacks and Promises: When an I/O operation (like reading from a file, network request, etc.) is initiated, Node.js sends the request to the system kernel, which processes it and notifies Node.js once it's complete. Meanwhile, Node.js can continue executing other code. This is achieved using callbacks, Promises, or the async/await syntax.
+
+Worker Threads
+
+For CPU-bound tasks, where heavy computation might block the event loop and degrade performance, Node.js can use worker threads. These are actual threads from the underlying operating system that can run in parallel to the main event loop.
+
+1. Worker Threads Module: Introduced in Node.js v10.5.0 and stabilized in v12, the worker_threads module allows the creation of multiple threads. Each worker thread runs in its own V8 instance and event loop.
+
+2. Creating Worker Threads:
+
+```
+const { Worker } = require('worker_threads');
+
+const worker = new Worker('./worker.js');
+worker.on('message', (message) => {
+    console.log(`Received message from worker: ${message}`);
+});
+
+worker.postMessage('Start working');
+
+```
+
+```
+//worker.js
+const { parentPort } = require('worker_threads');
+
+parentPort.on('message', (message) => {
+  if (message === 'Start computing') {
+    // Perform some CPU-intensive task
+    let result = 0;
+    for (let i = 0; i < 1e9; i++) {
+      result += i;
+    }
+
+    parentPort.postMessage(result);
+  }
+});
+
+```
+
+3. Communicating with Workers: Workers communicate with the main thread via message passing, which avoids the complexity of shared memory and makes concurrency safer and easier to manage.
+
+Summary
+
+* Event Loop: Efficiently handles I/O-bound tasks using non-blocking asynchronous operations.
+* Worker Threads: Useful for CPU-bound tasks that would otherwise block the event loop.
+
 
 >How to create a simple server in Node.js that returns Hello World?
 
@@ -200,13 +255,166 @@ console.log(__filename);
 | Zlib | It is used to compress and decompress data. It can be accessed with require('zlib'). |
 
 
+> Node js most importent core module services and modules short discurtion
+
+1. Streams
+
+* Purpose: Handle streaming data efficiently, such as reading from or writing to files, network communications, or any kind of continuous data flow.
+
+```
+import fs from 'fs'
+const readableStream = fs.createReadStream('file.txt');
+const writableStream = fs.createWriteStream('output.txt');
+
+readableStream.pipe(writableStream);
+
+```
+
+2. HTTP/HTTPS
+
+* Purpose: Create web servers and handle HTTP/HTTPS requests and responses.
+
+```
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello, World!\n');
+});
+
+server.listen(3000, () => {
+  console.log('Server running at http://localhost:3000/');
+});
+
+```
+
+3. File System (fs)
+
+* Purpose: Interact with the file system, including reading, writing, and manipulating files and directories.
+
+```
+const fs = require('fs');
+
+fs.readFile('file.txt', 'utf8', (err, data) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log(data);
+});
+
+```
+
+4. Path
+
+* Purpose: Work with file and directory paths.
+
+```
+const path = require('path');
+
+const fullPath = path.join(__dirname, 'file.txt');
+console.log(fullPath);
+
+```
+
+5. Events
+
+* Purpose: Implement event-driven programming with the EventEmitter class.
+
+```
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
+
+eventEmitter.on('event', () => {
+  console.log('An event occurred!');
+});
+
+eventEmitter.emit('event');
+
+```
+
+6. Child Processes
+
+* Purpose: Spawn new processes and execute shell commands.
+
+```
+const { exec } = require('child_process');
+
+exec('ls', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.error(`stderr: ${stderr}`);
+});
+
+```
+7. Timers
+
+* Purpose: Schedule code execution with functions like setTimeout, setInterval, and setImmediate.
+
+```
+setTimeout(() => {
+  console.log('This runs after 2 seconds');
+}, 2000);
+
+setInterval(() => {
+  console.log('This runs every 1 second');
+}, 1000);
+
+```
+
+8. Buffer
+
+* Purpose: Handle binary data directly.
+
+```
+const buf = Buffer.from('Hello, World!');
+console.log(buf.toString('hex'));
+
+```
+
+9. Crypto
+
+* Purpose: Handle cryptographic operations such as hashing, encryption, and decryption.
+
+```
+const crypto = require('crypto');
+
+const hash = crypto.createHash('sha256').update('password').digest('hex');
+console.log(hash);
+
+```
+
+10. Cluster
+
+* Purpose: Enable multi-core server applications by forking worker processes.
+
+```
+const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
+
+if (cluster.isMaster) {
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+} else {
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end('Hello, World!');
+  }).listen(8000);
+}
+
+```
+
 >What is Node.js Process Model?
 
 Node. js provides the facility to get process information such as process id, architecture, platform, version, release, uptime, upu usage etc. It can also be used to kill process, set uid, set groups, unmask etc. The process is a global object, an instance of EventEmitter, can be accessed from anywhere.
 
 ### Node js child process ###
-
-
 
 There are four different ways to create a child process in Node: spawn(), fork(), exec(), and execFile()
 
@@ -457,6 +665,8 @@ fs.rename('mynewfile1.txt', 'myrenamedfile.txt', function (err) {
 });
 ```
 
+
+
 ## Cluster modules ##
 
 >What is cluster?
@@ -592,7 +802,7 @@ req.end();
 
 To send data in the POST request, we use the .write() method to write the data to the request stream and then call .end() to complete the request. In this example, we're sending JSON data in the request body.
 
-### URL Module ###
+## URL Module ##
 
 The Built-in URL Module :
 
@@ -619,6 +829,7 @@ console.log(parseData.search);
 var qdata = q.query; // return object {year:2022, month:06}
 console.log(qdata); //  return 06
 ```
+## Streams Module ##
 
 >How many types of streams are present in node.js?
 
@@ -726,6 +937,31 @@ The Node.js stream feature makes it possible to process large data continuously 
 Some of the use cases of Node.js streams include:
 * Reading a file that's larger than the free memory space, because it's broken into smaller chunks and processed by streams. For example, a browser processes videos from streaming platforms like Netflix in small chunks, making it possible to watch videos immediately without having to download them all at once.
 * Reading large log files and writing selected parts directly to another file without downloading the source file. For example, you can go through traffic records spanning multiple years to extract the busiest day in a given year and save that data to a new file.
+
+```
+const downloadFile = (fileKey, downloadPath) => {
+  const downloadParams = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: fileKey,
+  };
+
+  const fileStream = fs.createWriteStream(downloadPath);
+
+  s3.getObject(downloadParams)
+    .createReadStream()
+    .on('error', (err) => {
+      console.error('Download Error', err);
+    })
+    .pipe(fileStream)
+    .on('close', () => {
+      console.log('Download Success');
+    });
+};
+
+// Usage
+downloadFile('your-file-key', '/path/to/save/large/file');
+
+```
 
 ### Node.js Events ###
 
