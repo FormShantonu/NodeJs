@@ -6,21 +6,21 @@ Node.js is an open-source, cross-platform, JavaScript runtime environment that e
 
 >Why node js we use?
 
-Node. js is a platform built on Chrome's JavaScript runtime for easily building fast and scalable network applications. Node. js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.
+Node. js is a platform built on Chrome's JavaScript runtime for easily building fast and scalable network applications. Node. js uses an event-driven, non-blocking I/O model that is lightweight and efficient, perfect for data-intensive real-time applications running across distributed devices.
 
 > Node js Vs Php
 
 1. Non-blocking, Asynchronous Architecture: Node.js uses an event-driven, non-blocking I/O model. This makes it particularly suitable for applications that require handling a large number of concurrent connections, such as real-time applications, chat applications, and streaming services. PHP traditionally follows a blocking approach, which can limit its performance in highly concurrent scenarios.
-2. Single Language for Frontend and Backend: With Node.js, you can use JavaScript on both the frontend and backend, which can simplify development and maintenance for full-stack developers. This eliminates context switching between languages and allows sharing of code and libraries.
+2. Single Language for Frontend and Backend: With Node.js, you can use JavaScript on both the frontend and backend, which can simplify development and maintenance for full-stack developers. This eliminates context-switching between languages and allows code and libraries to be shared.
 3. Performance and Scalability: Due to its non-blocking architecture, Node.js can handle a high number of concurrent connections with low memory usage. It excels in scenarios that require real-time processing and data streaming, making it a solid choice for applications that need to scale quickly and efficiently.
 4. Microservices and APIs: Node.js is well-suited for building microservices architectures and creating APIs, as its lightweight nature allows for efficient communication between different components of an application.
 5. Real-time Applications: Node.js is a strong contender for building real-time applications like live chats, online gaming, collaborative tools, and other applications that require instant updates and interactions.
 
->what is  event-driven in node js?
+> What is  event-driven in node js?
 
 "Event-driven" means actions are triggered by specific events, like a user clicking a button or a sensor detecting motion. It's a way systems respond to occurrences rather than following a fixed sequence.
 
-In JavaScript, event-driven programming is based on the concept of callbacks. A callback is a function that is passed as an argument to another function and is executed when a certain event occurs. For example, in a web application, you might have a function that is called when the user clicks a button. This function would be a callback that is executed when the "click" event occurs.
+In JavaScript, event-driven programming is based on the concept of callbacks. A callback is a function passed as an argument to another function and  executed when a certain event occurs. For example, a web application might have a function  called when the user clicks a button. This function would execute a callback when the "click" event occurs.
 
 
 >What does the runtime environment mean in Node.js?
@@ -29,15 +29,15 @@ The Node.js runtime is the software stack responsible for installing your web se
 
 >Single Threaded Event Loop Model Processing Steps
 
-Clients Send request to Web Server.
+Clients Send requests to the Web Server.
 * Node.js Web Server internally maintains a Limited Thread pool to provide services to the Client Requests.
 * Node.js Web Server receives those requests and places them into a Queue. It is known as Event Queue.
-* Node.js Web Server internally has a Component, known as Event Loop. Why it got this name is that it uses indefinite loop to receive requests and process them.
-Event Loop uses Single Thread only. It is main heart of Node.js Platform Processing Model.
-Event Loop checks any Client Request is placed in Event Queue. If no, then wait for incoming requests for indefinitely.
-If yes, then pick up one Client Request from Event Queue
-Starts process that Client Request
-If that Client Request Does Not requires any Blocking IO Operations, then process everything, prepare response and send it back to client.
+* Node.js Web Server internally has a Component, known as Event Loop. Why it got this name is that it uses an indefinite loop to receive requests and process them.
+Event Loop uses Single Thread only. It is the main heart of the Node.js Platform Processing Model.
+Event Loop checks any Client Request is placed in the Event Queue. If no, then wait for incoming requests for indefinitely.
+If yes, then pick up one Client Request from the Event Queue
+Starts process that the Client Request
+If that Client Request Does Not require any Blocking IO Operations, then process everything, prepare the response and send it back to the client.
 If that Client Request requires some Blocking IO Operations like interacting with Database, File System, External Services then it will follow different approach
 Checks Threads availability from Internal Thread Pool
 Picks up one Thread and assign this Client Request to that thread.
@@ -79,9 +79,9 @@ For CPU-bound tasks, where heavy computation might block the event loop and degr
 2. Creating Worker Threads:
 
 ```
-const { Worker } = require('worker_threads');
-
+import { Worker } From 'worker_threads';
 const worker = new Worker('./worker.js');
+
 worker.on('message', (message) => {
     console.log(`Received message from worker: ${message}`);
 });
