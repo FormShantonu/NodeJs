@@ -47,20 +47,21 @@ In JavaScript, event-driven programming is based on the concept of callbacks. A 
   1. Triggered using the emit() method: emitter.emit('event_name', arg1, arg2, ...);
 
 * Example:
-'''
-  const EventEmitter = require('events');
 
-  class MyEmitter extends EventEmitter {}
+  '''
+    const EventEmitter = require('events');
 
-  const myEmitter = new MyEmitter();
+    class MyEmitter extends EventEmitter {}
 
-  myEmitter.on('event', (arg1, arg2) => {
-      console.log('An event occurred!');
-      console.log(arg1, arg2);
-  });
+    const myEmitter = new MyEmitter();
 
-  myEmitter.emit('event', 'Hello', 'world');
-'''
+    myEmitter.on('event', (arg1, arg2) => {
+        console.log('An event occurred!');
+        console.log(arg1, arg2);
+    });
+
+    myEmitter.emit('event', 'Hello', 'world');
+  '''
 
 In this example:
 
@@ -75,7 +76,7 @@ In this example:
   3. Events are fundamental to the asynchronous nature of Node.js.
   4. By understanding events and event-driven principles, you can effectively leverage the power of Node.js for building efficient and scalable applications.
 
-  
+
 >What does the runtime environment mean in Node.js?
 
 The Node.js runtime is the software stack responsible for installing your web service's code and its dependencies and running your service.
