@@ -798,8 +798,10 @@ if (cluster.isMaster) {
 3. Load Balancing: Multiple workers can handle requests concurrently, providing better load distribution.
 
 > Considerations
-    * State Sharing: Workers do not share state. If shared state is needed, consider using external storage (e.g., databases, Redis).
-    * Inter-Process Communication: Use worker.send() and process.on('message', handler) for communication between the master and workers.
+
+  * State Sharing: Workers do not share state. If shared state is needed, consider using external storage (e.g., databases, Redis).
+  
+  * Inter-Process Communication: Use worker.send() and process.on('message', handler) for communication between the master and workers.
 
 The Cluster module is powerful for scaling Node.js applications on multi-core systems, ensuring better performance and reliability.
 
