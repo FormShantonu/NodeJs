@@ -1774,7 +1774,6 @@ Using RabbitMQ is generally preferred because it is a battle-tested, reliable, a
 
 Serverless computing is a cloud computing execution model that allocates machine resources on an as-used basis. In simpler terms, it means you can build and run applications without having to worry about managing any servers. You simply upload your code and let someone else handle the infrastructure.
 
-> 
 
 
 
