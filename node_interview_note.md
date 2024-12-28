@@ -1,10 +1,10 @@
 ## NODE INTERVIEW ##
 
->What is Node.js?
+> What is Node.js?
 
 Node.js is an open-source, cross-platform, JavaScript runtime environment that executes JavaScript code outside of a browser. 
 
->Why node js we use?
+> Why node js we use?
 
 Node. js is a platform built on Chrome's JavaScript runtime for easily building fast and scalable network applications. Node. js uses an event-driven, non-blocking I/O model that is lightweight and efficient, perfect for data-intensive real-time applications running across distributed devices.
 
@@ -77,11 +77,11 @@ In this example:
   4. By understanding events and event-driven principles, you can effectively leverage the power of Node.js for building efficient and scalable applications.
 
 
->What does the runtime environment mean in Node.js?
+> What does the runtime environment mean in Node.js?
 
 The Node.js runtime is the software stack responsible for installing your web service's code and its dependencies and running your service.
 
->Single Threaded Event Loop Model Processing Steps
+> Single Threaded Event Loop Model Processing Steps
 
 Clients Send requests to the Web Server.
 * Node.js Web Server internally maintains a Limited Thread pool to provide services to the Client Requests.
@@ -98,7 +98,7 @@ Picks up one Thread and assign this Client Request to that thread.
 That Thread is responsible for taking that request, process it, perform Blocking IO operations, prepare response and send it back to the Event Loop
 Event Loop in turn, sends that Response to the respective Client.
 
->What is chrome v8 engine?
+> What is chrome v8 engine?
 
 V8 is a C++ based open-source JavaScript engine developed by Google. It was originally designed for Google Chrome and Chromium-based browsers ( such as Brave ) in 2008, but it was later utilized to create Node.js for server-side coding.
 
@@ -106,7 +106,7 @@ V8 is the JavaScript engine i.e. it parses and executes JavaScript code. The DOM
 
 V8 is known to be a JavaScript engine because it takes JavaScript code and executes it while browsing in Chrome. It provides a runtime environment for the execution of JavaScript code. The best part is that the JavaScript engine is completely independent of the browser in which it runs.
 
->How V8 compiles JavaScript code?
+> How V8 compiles JavaScript code?
 
 Compilation is the process of converting human-readable code to machine code. There are two ways to compile the code
 
@@ -114,7 +114,7 @@ Using an Interpreter: The interpreter scans the code line by line and converts i
 Using a Compiler: The Compiler scans the entire document and compiles it into highly optimized byte code.
 The V8 engine uses both a compiler and an interpreter and follows just-in-time (JIT) compilation to speed up the execution. JIT compiling works by compiling small portions of code that are just about to be executed. This prevents long compilation time and the code being compiles is only that which is highly likely to run.
 
->How node js thread  parity the request 
+> How node js thread  parity the request 
 
 In Node.js, request handling and concurrency are primarily managed through its event-driven architecture and the use of the event loop, rather than traditional threading. However, Node.js also provides ways to work with threads for more complex concurrency needs, such as CPU-bound tasks.
 
@@ -170,7 +170,7 @@ Summary
 * Worker Threads: Useful for CPU-bound tasks that would otherwise block the event loop.
 
 
->How to create a simple server in Node.js that returns Hello World?
+> How to create a simple server in Node.js that returns Hello World?
 
 Step 01: Create a project directory
     mkdir myapp
@@ -196,7 +196,7 @@ Step 04: app.js (set the local server)
 Step 05: Run the app
     node app.js
 
->Create Database:
+> Create Database:
 
 ```
 var mongoose = require('mongoose');
@@ -222,7 +222,7 @@ Syntax:
 const module = require('module_name');
 ```
 
->Explain Buffer data type in Node.js?
+> Explain Buffer data type in Node.js?
 
 Node.js includes an additional data type called Buffer ( not available in browser's JavaScript ). Buffer is mainly used to store binary data, while reading from a file or receiving packets over the network.
 
@@ -239,7 +239,7 @@ b.write(str);
 console.log( str.length ); // 10
 console.log( b.length ); // 10000
 ```
->What are the global objects of Node.js?
+> What are the global objects of Node.js?
 
 Node.js Global Objects are the objects that are available in all modules. Global Objects are built-in objects that are part of the JavaScript and can be used directly in the application without importing any particular module.
 
@@ -290,7 +290,7 @@ It specifies the filename of the code being executed. This is the resolved absol
 console.log(__filename);
 ```
 
->The following table lists some of the important core modules in Node.js.
+> The following table lists some of the important core modules in Node.js.
 
 | Name | Description |
 | ---- |:-----------:|
@@ -464,7 +464,7 @@ if (cluster.isMaster) {
 
 ```
 
->What is Node.js Process Model?
+> What is Node.js Process Model?
 
 Node. js provides the facility to get process information such as process id, architecture, platform, version, release, uptime, upu usage etc. It can also be used to kill process, set uid, set groups, unmask etc. The process is a global object, an instance of EventEmitter, can be accessed from anywhere.
 
@@ -472,7 +472,7 @@ Node. js provides the facility to get process information such as process id, ar
 
 There are four different ways to create a child process in Node: spawn(), fork(), exec(), and execFile()
 
->Basic understanding of the concept of child process:
+> Basic understanding of the concept of child process:
 Node.js runs in a single thread. You can, however take advantage of multiple processes.
 
 child_process module allows to create child processes in Node.js. Those processes can easily communicate with each other using a built-in messaging system.
@@ -485,7 +485,7 @@ Here are key points to understand about child processes in Node.js:
 * `fork` : This function is a special case of spawn used specifically for creating new Node.js processes. It sets up inter-process communication (IPC) automatically, allowing parent and child processes to exchange messages.
 * Inter-Process Communication (IPC) : Child processes can communicate with the parent process and vice versa using a message-passing mechanism. The send method is used to send messages, and the message event is used to receive them.
 
->Explain the use of the spawn or fork functions from the child_process module
+> Explain the use of the spawn or fork functions from the child_process module
 
 1. `spawn` : The spawn function is used to launch a new process with the specified command. It is suitable for scenarios where you want to run an external command in a new process and have access to its standard input, output, and error streams.
 
@@ -537,7 +537,7 @@ process.send('Hello from child!');
   * Designed for running separate Node.js scripts in child processes.
   * Sets up automatic communication channels (IPC) between the parent and child processes using the send method and the message event.
 
->How to listen for the error event and handle errors that may occur during the execution of a child process.
+> How to listen for the error event and handle errors that may occur during the execution of a child process.
 
 In Node.js, you can listen for the error event to handle errors that may occur during the execution of a child process. The error event is emitted when the child process cannot be spawned, or if it exits with a non-zero exit code.
 
@@ -600,7 +600,7 @@ process.on('message', (message) => {
 
 ### NODE.JS FILE SYSTEM ###
 
->How Node.js read the content of a file?
+> How Node.js read the content of a file?
 
 The "normal" way in Node.js is probably to read in the content of a file in a non-blocking, asynchronous way. That is, to tell Node to read in the file, and then to get a callback when the file-reading has been finished. That would allow us to handle several requests in parallel.
 
@@ -612,7 +612,7 @@ Read files
 * Delete files
 * Rename files
 
->Read Files
+> Read Files
 
 The fs.readFile() method is used to read files on your computer.
 
@@ -642,7 +642,7 @@ http.createServer(function (req, res) {
   });
 }).listen(3000);
 ```
->Creat File:
+> Creat File:
 
 The File System module has methods for creating new files:
 
@@ -683,14 +683,14 @@ fs.writeFile('mynewfile3.txt', 'Hello content!', function (err) {
 });
 ```
 
->Update Files
+> Update Files
 
 The File System module has methods for updating files:
 
 fs.appendFile()
 fs.writeFile()
 
->Delete Files
+> Delete Files
 To delete a file with the File System module,  use the fs.unlink() method.
 
 The fs.unlink() method deletes the specified file:
@@ -704,7 +704,7 @@ fs.unlink('mynewfile2.txt', function (err) {
 });
 ```
 
->Rename Files
+> Rename Files
 
 To rename a file with the File System module,  use the fs.rename() method.
 
@@ -723,7 +723,7 @@ fs.rename('mynewfile1.txt', 'myrenamedfile.txt', function (err) {
 
 ## Cluster modules ##
 
->What is cluster?
+> What is cluster?
 
 The Cluster module in Node.js creates child processes (workers) that share the same server ports. This can be particularly useful for taking advantage of multi-core systems, allowing multiple instances of an application to run on different cores and handle more load.
 
@@ -865,7 +865,7 @@ http.createServer(function (req, res) {
 }).listen(8080);
 ```
 
->HTTP module call third party api with GET request :
+> HTTP module call third party api with GET request :
 
 The http module is a built-in module in Node.js that allows you to make HTTP requests and build HTTP servers.
 
@@ -887,7 +887,7 @@ http.get('http://api.example.com',(res)=>{
 });
 ```
 
->How to make a POST request using the http module ?
+> How to make a POST request using the http module ?
 
 ```
 var http = require('http');
@@ -948,9 +948,9 @@ console.log(qdata); //  return 06
 ```
 ## Streams Module ##
 
->How many types of streams are present in node.js?
+> How many types of streams are present in node.js?
 
-Streams are objects that let you read data from a source or write data to a destination in continuous fashion. There are four types of streams
+streams are objects that allow you to handle data flow (reading, writing, or processing) in chunks rather than loading the entire data into memory. This makes streams memory-efficient and allows for processing large files or real-time data effectively.There are four types of streams
 
 * Readable − Stream which is used for read operation.
 * Writable − Stream which is used for write operation.
@@ -959,12 +959,14 @@ Streams are objects that let you read data from a source or write data to a dest
 
 Each type of Stream is an EventEmitter instance and throws several events at different instance of times.
 
-Methods:
+Event:
 
 * data − This event is fired when there is data is available to read.
 * end − This event is fired when there is no more data to read.
 * error − This event is fired when there is any error receiving or writing data.
 * finish − This event is fired when all the data has been flushed to underlying system.
+* pipe - Emitted when a readable stream is piped into a writable stream.
+* unpipe - Emitted when the readable stream is unpiped from the writable destination.
 
 >1. Reading from a Stream:
 
@@ -1046,8 +1048,21 @@ fs.createReadStream('input.txt')
   
 console.log("File Compressed.");
 ```
+> Advantages of Streams
 
->How to handle large data in Node.js?
+1. Memory-Efficient:
+  * Process data in chunks, avoiding high memory usage.
+
+2. Faster:
+  * Start processing as soon as data is available, without waiting for the entire file or response
+
+3. Scalable:
+  * Ideal for applications dealing with large files or real-time data streams.
+
+4. Asynchronous:
+  * Streams operate asynchronously, fitting well with Node.js's non-blocking architecture. 
+
+> How to handle large data in Node.js?
 
 The Node.js stream feature makes it possible to process large data continuously in smaller chunks without keeping it all in memory. One benefit of using streams is that it saves time, since you don't have to wait for all the data to load before you start processing. This also makes the process less memory-intensive.
 
@@ -1113,13 +1128,13 @@ Here's a comprehensive approach that incorporates the best aspects of previous r
 
 ### Node.js Events ###
 
->What is Event in node?
+> What is Event in node?
 
 Every action on a computer is an event. Like when a connection is made or a file is opened.
 
 Objects in Node.js can fire events, like the readStream object fires events when opening and closing a file:
 
->The EventEmitter Object
+> The EventEmitter Object
 
 You can assign event handlers to your own events with the EventEmitter object.
 
@@ -1143,7 +1158,7 @@ eventEmitter.on('scream', myEventHandler);
 
 eventEmitter.emit('scream');
 ```
->what to do for maintain the code quality in node js
+> What to do for maintain the code quality in node js
 
 * Use the latest Node.js version.: This will ensure that you have access to the latest features and bug fixes.
 * Use a consistent code style.: This will make your code more readable and maintainable.
@@ -1156,7 +1171,7 @@ eventEmitter.emit('scream');
 
 ### NODE.JS RESTFUL API ###
 
->Explain RESTful Web Services in Node.js?
+> Explain RESTful Web Services in Node.js?
 
 REST stands for REpresentational State Transfer. REST is web standards based architecture and uses HTTP Protocol. It is an architectural style as well as an approach for communications purposes that is often used in various web services development. A REST Server simply provides access to resources and REST client accesses and modifies the resources using HTTP protocol.
 
@@ -1232,7 +1247,7 @@ post('/add-user', function(req,res){
 
 ```
 
->What is the difference between req.params and req.query?
+> What is the difference between req.params and req.query?
 
 The req.params are a part of a path in URL and they're also known as URL variables. for example, if you have the route /books/:id, then the id property will be available as req.params.id. req.params default value is an empty object {}.
 
@@ -1272,7 +1287,7 @@ app.get('/employees', (req, res, next) => {
 
 ### Node js advance ###
 
->What to do to maintain the performance of your node application and what technology you should use for it?
+> What to do to maintain the performance of your node application and what technology you should use for it?
 Maintaining the performance of a Node.js application involves a combination of best practices in coding, monitoring, scaling, and employing the right technologies. Here's a comprehensive approach:
 
 Best Practices for Maintaining Performance
@@ -1334,7 +1349,7 @@ Scaling Strategies
 
 ### Node js Error Handel ###
 
->How we can handle error in node js?
+> How we can handle error in node js?
 
 Handling errors in Node.js is crucial for building robust and maintainable applications. Here are some best practices for error handling in Node.js:
 
@@ -1505,7 +1520,7 @@ app.post('/user',
 
 ### Authentication ###
 
->JWT Authentication
+> JWT Authentication
 
 We actualy working on JWT token for authentication.
 JSON Web Token (JWT) is an open standard that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
@@ -1552,7 +1567,7 @@ Custom claims that developers define to share information between parties who ag
 > Signature
 Used to verify the sender of the token and to ensure that the message hasn't been changed
 
->O'auth2 mechanism for authentication system
+> O'auth2 mechanism for authentication system
 
 OAuth 2.0 is a popular authorization framework that is widely used for securing APIs and implementing authentication mechanisms in web and mobile applications. When implementing OAuth 2.0 in a Node.js authentication system, you typically follow these steps:
 
@@ -1575,7 +1590,7 @@ OAuth 2.0 is a popular authorization framework that is widely used for securing 
 9. Secure APIs and Resources:
   * Secure your application's APIs and resources by validating OAuth 2.0 access tokens for each incoming request. Ensure that only authorized users have access to protected endpoints.
 
->Explain the OAuth 2.0 authentication system
+> Explain the OAuth 2.0 authentication system
 
 Here's an explanation of how OAuth 2.0 authentication system works:
 
@@ -1603,11 +1618,11 @@ Here's an explanation of how OAuth 2.0 authentication system works:
 
 ### Express js ###
 
->Explain the purpose of the ExpressJS package.
+> Explain the purpose of the ExpressJS package.
 
 Express.js is a framework built on top of Node.js that facilitates the management of the flow of data between server and routes in server-side applications. It is a lightweight and flexible framework that provides a wide range of features required for the web as well as mobile application development. Express.js is developed on the middleware module of Node.js called connect. The connect module further makes use of http module to communicate with Node.js. Thus, if you are working with any of the connect based middleware modules, then you can easily integrate with Express.js.
 
->How does an Express code look like?
+> How does an Express code look like?
 
 The express.js program is saved with ".js" extension.
 
@@ -1624,7 +1639,7 @@ var server = app.listen(8000, function () {
 });
 ```
 
->Which are the arguments available to an Express JS route handler function?
+> Which are the arguments available to an Express JS route handler function?
 
 Following are the arguments that are available to an Express.js route handler-function:
 
@@ -1632,7 +1647,7 @@ Following are the arguments that are available to an Express.js route handler-fu
 * Res: the response object
 * Next (optional): It is a function employed to pass management to one of the above route handlers.
 
->In Express how many type of middleware exist?
+> In Express how many type of middleware exist?
 
 An Express application can use the following types of middleware: 
 
@@ -1647,7 +1662,7 @@ An Express application can use the following types of middleware:
 * Third-party Middleware
 
 
->What is Middleware?
+> What is Middleware?
 
 The middleware in node. js is a function that will have all the access for requesting an object, responding to an object, and moving to the next middleware function in the application request-response cycle.
 
@@ -1672,7 +1687,7 @@ app.listen(3000,function(req,res){
 
 ```
 
->Application-level middleware: 
+> Application-level middleware: 
 
 The application-level middleware method is used to bind to the app object using app.use() method. It applies on all routes.
 
@@ -1684,7 +1699,7 @@ app.use(function (req, res, next) {
 }) 
 ```
 
->Router-level Middleware: 
+> Router-level Middleware: 
 
 The router-level Middleware is used to bind to a specific instance of express.Router().Built-in Middleware: The built-in Middleware was introduced with version 4.x. It ends the dependency on Connect.
 
@@ -1710,7 +1725,7 @@ Third-party Middleware: There are many third-party middleware available such as:
 
 * Express-validator
 
->How to create custom middleware in express js
+> How to create custom middleware in express js
 
 Creating custom middleware in Express.js allows you to add additional functionality to your routes and requests. Middleware functions in Express.js have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle (next). Here's how you can create custom middleware in Express.js:
 
@@ -1748,4 +1763,18 @@ In this example:
 * The myLogger middleware function logs the HTTP method and URL of each incoming request.
 * It is mounted globally using app.use() so that it applies to all routes.
 * It is also mounted specifically to the /api/users route, where it will only be executed for requests to that route.
+
+## Rabit MQ ##
+
+> Why we use rabit MQ instead of building a custom queue system with Node.js?
+
+Using RabbitMQ is generally preferred because it is a battle-tested, reliable, and feature-rich solution for message queuing. A custom-built Node.js queue can be useful for simple or highly specific needs but often lacks the robustness, scalability, and features that RabbitMQ provides out of the box.
+
+> What is server less?
+
+Serverless computing is a cloud computing execution model that allocates machine resources on an as-used basis. In simpler terms, it means you can build and run applications without having to worry about managing any servers. You simply upload your code and let someone else handle the infrastructure.
+
+> 
+
+
 
