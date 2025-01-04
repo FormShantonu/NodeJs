@@ -1774,6 +1774,19 @@ Using RabbitMQ is generally preferred because it is a battle-tested, reliable, a
 
 Serverless computing is a cloud computing execution model that allocates machine resources on an as-used basis. In simpler terms, it means you can build and run applications without having to worry about managing any servers. You simply upload your code and let someone else handle the infrastructure.
 
+>What is RabbitMQ? How does it differ from other messaging systems like Kafka?
 
+RabbitMQ and Kafka are both popular messaging systems. 
+* RabbitMQ Architecture Message broker but Kafka distributed streaming platform.
+* RabbitMQ Data Handling by Queues, exchanges but Kafka use Topics, partitions
+* RabbitMQ Scalability Vertical scaling but Kafka Horizontal scaling.
+* RabbitMQ Use Cases Microservices, task queues but kafka Real-time data streaming, metrics.
 
+> What are the core components of RabbitMQ?
 
+The core components of RabbitMQ are:
+
+* Producer: An application that sends messages to the RabbitMQ server.
+* Exchange: A virtual entity that receives messages from producers and routes them to queues based on defined rules.
+* Queue: A buffer that stores messages until they are consumed by consumers.
+* Consumer: An application that receives messages from queues.
