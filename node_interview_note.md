@@ -81,6 +81,11 @@ In this example:
 
 The Node.js runtime is the software stack responsible for installing your web service's code and its dependencies and running your service.
 
+> What is the defference between runtime environment and framework?
+
+* Runtime env primarily focusing on nasesary infrastructure for code execution.
+* framework are provide a development env for inbuild coding structure, libraries which will hapl developer productivity.   
+
 > Single Threaded Event Loop Model Processing Steps
 
 Clients Send requests to the Web Server.
@@ -245,19 +250,12 @@ Node.js Global Objects are the objects that are available in all modules. Global
 
 These objects are modules, functions, strings and object itself as explained below.
 
-1. global:
-
-It is a global namespace. Defining a variable within this namespace makes it globally accessible.
+1. global variable:
 
 ```
 var myvar;
 ```
-
-2. process:
-
-It is an inbuilt global object that is an instance of EventEmitter used to get information on current process. It can also be accessed using require() explicitly.
-
-3. console:
+2. console:
 
 It is an inbuilt global object used to print to stdout and stderr.
 
@@ -265,30 +263,8 @@ It is an inbuilt global object used to print to stdout and stderr.
 console.log("Hello World"); // Hello World
 
 ```
-4. setTimeout(), clearTimeout(), setInterval(), clearInterval():
+>What is module in node?
 
-The built-in timer functions are globals
-
-```
-function printHello() {
-   console.log( "Hello, World!");
-}
-
-// Now call above function after 2 seconds
-var timeoutObj = setTimeout(printHello, 2000);
-```
-5. __dirname:
-
-It is a string. It specifies the name of the directory that currently contains the code.
-```
-console.log(__dirname);
-```
-6. __filename:
-It specifies the filename of the code being executed. This is the resolved absolute path of this code file. The value inside a module is the path to that module file.
-
-```
-console.log(__filename);
-```
 
 > The following table lists some of the important core modules in Node.js.
 
