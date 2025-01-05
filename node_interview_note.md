@@ -8,6 +8,10 @@ Node.js is an open-source, cross-platform, JavaScript runtime environment that e
 
 Node. js is a platform built on Chrome's JavaScript runtime for easily building fast and scalable network applications. Node. js uses an event-driven, non-blocking I/O model that is lightweight and efficient, perfect for data-intensive real-time applications running across distributed devices.
 
+>What Disadvantage of node js?
+
+When we require some CUP processing task like video editing application, this type of application singel threads can't perfrom well so for node js we avoid it.
+
 > Node js Vs Php
 
 1. Non-blocking, Asynchronous Architecture: Node.js uses an event-driven, non-blocking I/O model. This makes it particularly suitable for applications that require handling a large number of concurrent connections, such as real-time applications, chat applications, and streaming services. PHP traditionally follows a blocking approach, which can limit its performance in highly concurrent scenarios.
@@ -25,19 +29,16 @@ In JavaScript, event-driven programming is based on the concept of callbacks. A 
 * Benefits:
   1. Asynchronous operations: Efficiently handles tasks without blocking the main process.
   2. Scalability: Can handle high loads by distributing event processing across multiple processes or machines.
-  3. Modularity: Encourages the development of loosely coupled, reusable components.
-  4. Real-time updates: Enables applications to respond immediately to changes in data or user interactions.
+  3. Real-time updates: Enables applications to respond immediately to changes in data or user interactions.
+
 * Key components:
   1. Event emitter : A machanism that generates and emits events.
   2. Event listener : A function that is executed when a specific event occurs.
   3. Event queue : A data structure that stores events waiting to be processed.
   4. Event loop : A machanism that continuously checks the event queue and executes the appropriate listeners.
 
-* Event in Node js:
-  1. Core concept : Events are signals that indicate a change in the state of an object or system.
-
 * Event Types : 
-  1. System events: Triggered by the operating system Node.js environment (e.g., 'exit', 'error').
+  1. System events: e.g., 'exit', 'error'.
   2. Custom events: Created by developers to represent specific actions or conditions within their applications.
 
 * Event listeners:
