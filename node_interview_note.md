@@ -124,6 +124,37 @@ Syntax:
 ```
 const module = require('module_name');
 ```
+>How to import singel and multiple function from a module?
+
+```
+// module2.js
+function sayName(name){
+  console.log('This is my name',name)
+}
+module.exports = sayName;
+
+//App.js
+
+import module2 from './module2.js'
+
+// To import singel function
+module2('Shantonu');
+
+```
+
+> What type of module in Node?
+
+1. Core module
+2. Local module
+3. Third party module
+
+> Top 5 module?
+
+1. os 
+2. fs 
+3. path 
+4. event 
+5. http
 
 > Explain Buffer data type in Node.js?
 
