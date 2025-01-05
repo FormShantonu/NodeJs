@@ -86,6 +86,10 @@ In this example:
   3. Events are fundamental to the asynchronous nature of Node.js.
   4. By understanding events and event-driven principles, you can effectively leverage the power of Node.js for building efficient and scalable applications.
 
+>What is event argument?
+
+When we emit a event that time we passing some argument is call event argument.
+
 > Single Threaded Event Loop Model Processing Steps
 
 Clients Send requests to the Web Server.
@@ -116,14 +120,12 @@ Using an Interpreter: The interpreter scans the code line by line and converts i
 Using a Compiler: The Compiler scans the entire document and compiles it into highly optimized byte code.
 The V8 engine uses both a compiler and an interpreter and follows just-in-time (JIT) compilation to speed up the execution. JIT compiling works by compiling small portions of code that are just about to be executed. This prevents long compilation time and the code being compiles is only that which is highly likely to run.
 
-### What are the core modules of Node.js? ###
+### Node.js Module ###
 
-Node.js has a set of core modules that are part of the platform and come with the Node.js installation. These modules can be loaded into the program by using the require function.
+>What is module in node?
 
-Syntax:
-```
-const module = require('module_name');
-```
+Module is a set of functionality provide for reuse in node.
+
 >How to import singel and multiple function from a module?
 
 ```
@@ -192,9 +194,6 @@ It is an inbuilt global object used to print to stdout and stderr.
 console.log("Hello World"); // Hello World
 
 ```
->What is module in node?
-
-
 > The following table lists some of the important core modules in Node.js.
 
 | Name | Description |
@@ -216,7 +215,7 @@ console.log("Hello World"); // Hello World
 
 > Node js most importent core module services and modules short discurtion
 
-1. Streams
+1. Streams and name of some functionality
 
 * Purpose: Handle streaming data efficiently, such as reading from or writing to files, network communications, or any kind of continuous data flow.
 
@@ -229,7 +228,7 @@ readableStream.pipe(writableStream);
 
 ```
 
-2. HTTP/HTTPS
+2. HTTP/HTTPS and name of some functionality
 
 * Purpose: Create web servers and handle HTTP/HTTPS requests and responses.
 
@@ -248,9 +247,10 @@ server.listen(3000, () => {
 
 ```
 
-3. File System (fs)
+3. File System (fs) and name of some functionality
 
 * Purpose: Interact with the file system, including reading, writing, and manipulating files and directories.
+* Top functionality are fs.readFile()->read file, fs.writeFile()->write file,fs.unlink()->Delete file,fs.mkdir()->Create file.
 
 ```
 const fs = require('fs');
@@ -265,9 +265,9 @@ fs.readFile('file.txt', 'utf8', (err, data) => {
 
 ```
 
-4. Path
+4. Path and name of some functionality
 
-* Purpose: Work with file and directory paths.
+* Purpose: Manupulatin, joining, formating the path.
 
 ```
 const path = require('path');
@@ -276,10 +276,12 @@ const fullPath = path.join(__dirname, 'file.txt');
 console.log(fullPath);
 
 ```
+* Name of fumction is join(), resolve(), parsing(), formating().
 
-5. Events
+5. Events and name of some functionality
 
 * Purpose: Implement event-driven programming with the EventEmitter class.
+* Functionality are eventEmitter(), event queue, event hader, event loop. 
 
 ```
 const EventEmitter = require('events');
@@ -293,7 +295,7 @@ eventEmitter.emit('event');
 
 ```
 
-6. Child Processes
+6. Child Processes and name of some functionality
 
 * Purpose: Spawn new processes and execute shell commands.
 
@@ -310,7 +312,7 @@ exec('ls', (error, stdout, stderr) => {
 });
 
 ```
-7. Timers
+7. Timers 
 
 * Purpose: Schedule code execution with functions like setTimeout, setInterval, and setImmediate.
 
@@ -325,7 +327,7 @@ setInterval(() => {
 
 ```
 
-8. Buffer
+8. Buffer and name of some functionality
 
 * Purpose: Handle binary data directly.
 
@@ -335,7 +337,7 @@ console.log(buf.toString('hex'));
 
 ```
 
-9. Crypto
+9. Crypto and name of some functionality
 
 * Purpose: Handle cryptographic operations such as hashing, encryption, and decryption.
 
@@ -347,7 +349,7 @@ console.log(hash);
 
 ```
 
-10. Cluster
+10. Cluster and name of some functionality
 
 * Purpose: Enable multi-core server applications by forking worker processes.
 
