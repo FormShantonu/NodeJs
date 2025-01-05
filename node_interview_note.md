@@ -12,6 +12,15 @@ Node. js is a platform built on Chrome's JavaScript runtime for easily building 
 
 When we require some CUP processing task like video editing application, this type of application singel threads can't perfrom well so for node js we avoid it.
 
+> What does the runtime environment mean in Node.js?
+
+The Node.js runtime is the software stack responsible for installing your web service's code and its dependencies and running your service.
+
+> What is the defference between runtime environment and framework?
+
+* Runtime env primarily focusing on nasesary infrastructure for code execution.
+* framework are provide a development env for inbuild coding structure, libraries which will hapl developer productivity.
+
 > Node js Vs Php
 
 1. Non-blocking, Asynchronous Architecture: Node.js uses an event-driven, non-blocking I/O model. This makes it particularly suitable for applications that require handling a large number of concurrent connections, such as real-time applications, chat applications, and streaming services. PHP traditionally follows a blocking approach, which can limit its performance in highly concurrent scenarios.
@@ -77,16 +86,6 @@ In this example:
   3. Events are fundamental to the asynchronous nature of Node.js.
   4. By understanding events and event-driven principles, you can effectively leverage the power of Node.js for building efficient and scalable applications.
 
-
-> What does the runtime environment mean in Node.js?
-
-The Node.js runtime is the software stack responsible for installing your web service's code and its dependencies and running your service.
-
-> What is the defference between runtime environment and framework?
-
-* Runtime env primarily focusing on nasesary infrastructure for code execution.
-* framework are provide a development env for inbuild coding structure, libraries which will hapl developer productivity.   
-
 > Single Threaded Event Loop Model Processing Steps
 
 Clients Send requests to the Web Server.
@@ -106,118 +105,16 @@ Event Loop in turn, sends that Response to the respective Client.
 
 > What is chrome v8 engine?
 
-V8 is a C++ based open-source JavaScript engine developed by Google. It was originally designed for Google Chrome and Chromium-based browsers ( such as Brave ) in 2008, but it was later utilized to create Node.js for server-side coding.
-
-V8 is the JavaScript engine i.e. it parses and executes JavaScript code. The DOM, and the other Web Platform APIs ( they all makeup runtime environment ) are provided by the browser.
-
-V8 is known to be a JavaScript engine because it takes JavaScript code and executes it while browsing in Chrome. It provides a runtime environment for the execution of JavaScript code. The best part is that the JavaScript engine is completely independent of the browser in which it runs.
+V8 is a C++ based open-source JavaScript engine developed by Google. It was originally designed for Google Chrome and Chromium-based browsers ( such as Brave ) in 2008, it parses and executes JavaScript code.
 
 > How V8 compiles JavaScript code?
 
 Compilation is the process of converting human-readable code to machine code. There are two ways to compile the code
 
 Using an Interpreter: The interpreter scans the code line by line and converts it into byte code.
+
 Using a Compiler: The Compiler scans the entire document and compiles it into highly optimized byte code.
 The V8 engine uses both a compiler and an interpreter and follows just-in-time (JIT) compilation to speed up the execution. JIT compiling works by compiling small portions of code that are just about to be executed. This prevents long compilation time and the code being compiles is only that which is highly likely to run.
-
-> How node js thread  parity the request 
-
-In Node.js, request handling and concurrency are primarily managed through its event-driven architecture and the use of the event loop, rather than traditional threading. However, Node.js also provides ways to work with threads for more complex concurrency needs, such as CPU-bound tasks.
-
-Event Loop and Asynchronous I/O
-
-1. Event Loop: Node.js uses a single-threaded event loop to handle asynchronous operations. The event loop allows Node.js to perform non-blocking I/O operations by offloading these operations to the system's kernel whenever possible.
-
-2. Callbacks and Promises: When an I/O operation (like reading from a file, network request, etc.) is initiated, Node.js sends the request to the system kernel, which processes it and notifies Node.js once it's complete. Meanwhile, Node.js can continue executing other code. This is achieved using callbacks, Promises, or the async/await syntax.
-
-Worker Threads
-
-For CPU-bound tasks, where heavy computation might block the event loop and degrade performance, Node.js can use worker threads. These are actual threads from the underlying operating system that can run in parallel to the main event loop.
-
-1. Worker Threads Module: Introduced in Node.js v10.5.0 and stabilized in v12, the worker_threads module allows the creation of multiple threads. Each worker thread runs in its own V8 instance and event loop.
-
-2. Creating Worker Threads:
-
-```
-import { Worker } From 'worker_threads';
-const worker = new Worker('./worker.js');
-
-worker.on('message', (message) => {
-    console.log(`Received message from worker: ${message}`);
-});
-
-worker.postMessage('Start working');
-
-```
-
-```
-//worker.js
-const { parentPort } = require('worker_threads');
-
-parentPort.on('message', (message) => {
-  if (message === 'Start computing') {
-    // Perform some CPU-intensive task
-    let result = 0;
-    for (let i = 0; i < 1e9; i++) {
-      result += i;
-    }
-
-    parentPort.postMessage(result);
-  }
-});
-
-```
-
-3. Communicating with Workers: Workers communicate with the main thread via message passing, which avoids the complexity of shared memory and makes concurrency safer and easier to manage.
-
-Summary
-
-* Event Loop: Efficiently handles I/O-bound tasks using non-blocking asynchronous operations.
-* Worker Threads: Useful for CPU-bound tasks that would otherwise block the event loop.
-
-
-> How to create a simple server in Node.js that returns Hello World?
-
-Step 01: Create a project directory
-    mkdir myapp
-    cd myapp
-Step 02: Initialize project and link it to npm
-    npm init
-    This creates a package.json file in your myapp folder. The file contains references for all npm packages you have downloaded to your project. The command will prompt you to enter a number of things. You can enter your way through all of them EXCEPT this one:
-    entry point: (index.js)
-    Rename this to: app.js
-Step 03: Install Express in the myapp directory
-    npm install express --save
-Step 04: app.js (set the local server)
-```
-    var express = require('express');
-    var app = express();
-    app.get('/', function (req, res) {
-    res.send('Hello World!');
-    });
-    app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
-    });
-```
-Step 05: Run the app
-    node app.js
-
-> Create Database:
-
-```
-var mongoose = require('mongoose');
-var url = "mongodb://localhost:27017/mydb";
-var dotenv = require('dotenv');
-
-dotenv.config();
-void (async ()=>{
-  await mongoose.connect(url, {
-  uer: process.env.USER_NAME,
-  password:process.env.PASSWORD
-});
-})();
-
-```
 
 ### What are the core modules of Node.js? ###
 
@@ -1767,3 +1664,49 @@ The core components of RabbitMQ are:
 * Exchange: A virtual entity that receives messages from producers and routes them to queues based on defined rules.
 * Queue: A buffer that stores messages until they are consumed by consumers.
 * Consumer: An application that receives messages from queues.
+
+
+## Coding  ##
+
+> How to create a simple server in Node.js that returns Hello World?
+
+Step 01: Create a project directory
+    mkdir myapp
+    cd myapp
+Step 02: Initialize project and link it to npm
+    npm init
+    This creates a package.json file in your myapp folder. The file contains references for all npm packages you have downloaded to your project. The command will prompt you to enter a number of things. You can enter your way through all of them EXCEPT this one:
+    entry point: (index.js)
+    Rename this to: app.js
+Step 03: Install Express in the myapp directory
+    npm install express --save
+Step 04: app.js (set the local server)
+```
+    var express = require('express');
+    var app = express();
+    app.get('/', function (req, res) {
+    res.send('Hello World!');
+    });
+    app.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
+    });
+```
+Step 05: Run the app
+    node app.js
+
+> Create Database:
+
+```
+var mongoose = require('mongoose');
+var url = "mongodb://localhost:27017/mydb";
+var dotenv = require('dotenv');
+
+dotenv.config();
+void (async ()=>{
+  await mongoose.connect(url, {
+  uer: process.env.USER_NAME,
+  password:process.env.PASSWORD
+});
+})();
+
+```
