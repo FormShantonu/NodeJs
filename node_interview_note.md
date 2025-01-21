@@ -1195,6 +1195,7 @@ app.get('/employees', (req, res, next) => {
 ### Node js advance ###
 
 > What to do to maintain the performance of your node application and what technology you should use for it?
+
 Maintaining the performance of a Node.js application involves a combination of best practices in coding, monitoring, scaling, and employing the right technologies. Here's a comprehensive approach:
 
 Best Practices for Maintaining Performance
@@ -1252,6 +1253,20 @@ Scaling Strategies
 4. Database Scaling:
   * Sharding: Distribute data across multiple database instances.
   * Replication: Use database replication to enhance read performance and availability.
+
+> In node js how to handle load balance on request data? If 1 billion of hit on a API then how to handle it?
+
+Handling a large volume of requests (e.g., 1 billion hits on an API) in a Node.js application requires a combination of scaling strategies, architectural best practices, and optimization techniques. Here's a guide to effectively handle such high traffic:
+
+1. #### Use a Load Balancer ###
+
+  * Purpose: Distribute incoming requests across multiple server instances.
+  * Options:
+    * Use a cloud-based load balancer like AWS Elastic Load Balancer (ELB),Google Cloud Load Balancer
+    * Use open-source solutions like NGINX or HAProxy.
+2. ### Horizontal Scaling ###
+
+  * 
 
 
 ### Node js Error Handel ###
