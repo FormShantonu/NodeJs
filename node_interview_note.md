@@ -1390,47 +1390,52 @@ readFile();
 ```
 
 3. Global Error Handling: Use global error handlers for uncaught exceptions and unhandled promise rejections.
-Uncaught Exceptions
-Handle uncaught exceptions to prevent the application from crashing unexpectedly.
 
-```
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err.message);
-  process.exit(1); // Exit the process to avoid unknown state
-});
+* Uncaught Exceptions
 
-```
-Unhandled Promise Rejections
-Handle unhandled promise rejections to catch errors in promises that are not explicitly handled.
+  Handle uncaught exceptions to prevent the application from crashing unexpectedly.
 
-```
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err.message);
-  process.exit(1); // Exit the process to avoid unknown state
-});
+  ```
+  process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err.message);
+    process.exit(1); // Exit the process to avoid unknown state
+  });
 
-```
+  ```
+
+* Unhandled Promise Rejections
+
+  Handle unhandled promise rejections to catch errors in promises that are not explicitly handled.
+
+  ```
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    process.exit(1); // Exit the application or handle it gracefully
+  });
+
+  ```
 
 4. Centralized Error Handling Middleware in Express
-In an Express application, create centralized error handling middleware.
 
-```
-const express = require('express');
-const app = express();
+  * In an Express application, create centralized error handling middleware.
 
-// Your routes here
+  ```
+    const express = require('express');
+    const app = express();
 
-// Centralized error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
+    // Your routes here
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-});
+    // Centralized error handling middleware
+    app.use((err, req, res, next) => {
+      console.error(err.stack);
+      res.status(500).send('Something broke!');
+    });
 
-```
+    app.listen(3000, () => {
+      console.log('Server is running on port 3000');
+    });
+
+  ```
 
 5. Logging Errors
 
