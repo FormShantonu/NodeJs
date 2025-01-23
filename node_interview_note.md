@@ -632,8 +632,6 @@ fs.rename('mynewfile1.txt', 'myrenamedfile.txt', function (err) {
 });
 ```
 
-
-
 ## Cluster modules ##
 
 > What is cluster?
@@ -1538,7 +1536,14 @@ Stateless not a memory-intensive way and it gives a signature concept that gives
 
 > The flow of JWT token 
 
-The signature concept is that when any client first time trying to log in (not in registration ) then he will send the credentials and after that,in server side with a secret signature generate a key with, and which we decrypt the token on the server side and see that the secret signature is same then authentication done.
+1. Client Submits Login Credentials: The client sends their login credentials (e.g., username/email and password) to the server using a secure API endpoint.
+
+2. Server Verifies Credentials: Validates the email and password against the database. If the credentials are correct, it generates a new authentication token (JWT) for the client.3. 
+
+3. Server Sends Auth Token: If the credentials are valid, the server responds with the generated JWT token and optionally a refresh token.
+
+4. Client Stores the Token: The client stores the token securely in HTTP-only cookie or local storage.
+
 
 > JWT Authentication
 
@@ -1600,6 +1605,14 @@ Used to verify the sender of the token and to ensure that the message hasn't bee
 3. Security:
 
   * JWTs are signed using algorithms like HS256 or RS256, ensuring the integrity of the token.
+
+
+> What Happens If the Token Expires?
+
+If the access token expires:
+
+1. The client sends the refresh token to a refresh endpoint (e.g., /refresh-token).
+2. The server verifies the refresh token and issues a new access token.
 
 > O'auth2 mechanism for authentication system
 
