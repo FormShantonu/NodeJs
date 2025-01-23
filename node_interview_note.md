@@ -107,6 +107,10 @@ Picks up one Thread and assign this Client Request to that thread.
 That Thread is responsible for taking that request, process it, perform Blocking IO operations, prepare response and send it back to the Event Loop
 Event Loop in turn, sends that Response to the respective Client.
 
+> By default how many thread can use?
+
+  4 thread can use. but it dependencies on your system how many core it provide.
+
 > What is chrome v8 engine?
 
 V8 is a C++ based open-source JavaScript engine developed by Google. It was originally designed for Google Chrome and Chromium-based browsers ( such as Brave ) in 2008, it parses and executes JavaScript code.
