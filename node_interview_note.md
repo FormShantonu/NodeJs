@@ -1711,11 +1711,11 @@ An Express application can use the following types of middleware:
 
 > What is Middleware?
 
-The middleware in node. js is a function that will have all the access for requesting an object, responding to an object, and moving to the next middleware function in the application request-response cycle.
+The middleware in Node. js is a function that has all the access to request an object, respond to an object, and move to the next middleware function in the application request-response cycle.
 
 ```
 const express = require('express');
-const app = express;
+const app = express();
 
 const myLog = function(res,req,next){
   console.log('Hello My Middleware.');
@@ -1813,11 +1813,11 @@ In this example:
 
 ## Rabit MQ ##
 
-> Why we use rabit MQ instead of building a custom queue system with Node.js?
+> Why do we use rabit MQ instead of building a custom queue system with Node.js?
 
 Using RabbitMQ is generally preferred because it is a battle-tested, reliable, and feature-rich solution for message queuing. A custom-built Node.js queue can be useful for simple or highly specific needs but often lacks the robustness, scalability, and features that RabbitMQ provides out of the box.
 
-> What is server less?
+> What is server-less?
 
 Serverless computing is a cloud computing execution model that allocates machine resources on an as-used basis. In simpler terms, it means you can build and run applications without having to worry about managing any servers. You simply upload your code and let someone else handle the infrastructure.
 
@@ -1825,9 +1825,9 @@ Serverless computing is a cloud computing execution model that allocates machine
 
 RabbitMQ and Kafka are both popular messaging systems. 
 * RabbitMQ Architecture Message broker but Kafka distributed streaming platform.
-* RabbitMQ Data Handling by Queues, exchanges but Kafka use Topics, partitions
+* RabbitMQ Data Handling by Queues, and exchanges but Kafka use Topics, partitions
 * RabbitMQ Scalability Vertical scaling but Kafka Horizontal scaling.
-* RabbitMQ Use Cases Microservices, task queues but kafka Real-time data streaming, metrics.
+* RabbitMQ Use Cases Microservices, task queues but Kafka Real-time data streaming, metrics.
 
 > What are the core components of RabbitMQ?
 
@@ -1835,18 +1835,18 @@ The core components of RabbitMQ are:
 
 * Producer: An application that sends messages to the RabbitMQ server.
 * Exchange: A virtual entity that receives messages from producers and routes them to queues based on defined rules.
-* Queue: A buffer that stores messages until they are consumed by consumers.
+* Queue: A buffer that stores messages until consumers consume them.
 * Consumer: An application that receives messages from queues.
 
 
 ## Coding  ##
 
-> How to create a simple server in Node.js that returns Hello World?
+> How do you create a simple server in Node.js that returns Hello World?
 
 Step 01: Create a project directory
     mkdir myapp
     cd myapp
-Step 02: Initialize project and link it to npm
+Step 02: Initialize the project and link it to npm
     npm init
     This creates a package.json file in your myapp folder. The file contains references for all npm packages you have downloaded to your project. The command will prompt you to enter a number of things. You can enter your way through all of them EXCEPT this one:
     entry point: (index.js)
