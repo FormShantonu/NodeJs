@@ -155,31 +155,6 @@ module2('Shantonu');
 2. Local module
 3. Third party module
 
-> Top 5 module?
-
-1. os 
-2. fs 
-3. path 
-4. event 
-5. http
-
-> Explain Buffer data type in Node.js?
-
-Node.js includes an additional data type called Buffer ( not available in browser's JavaScript ). Buffer is mainly used to store binary data, while reading from a file or receiving packets over the network.
-
-Example:
-
-```
-/**
- * Buffer Data Type
- */
-let b = new Buffer(10000);
-let str = "----------";
-
-b.write(str); 
-console.log( str.length ); // 10
-console.log( b.length ); // 10000
-```
 > What are the global objects of Node.js?
 
 Node.js Global Objects are the objects that are available in all modules. Global Objects are built-in objects that are part of the JavaScript and can be used directly in the application without importing any particular module.
@@ -217,6 +192,14 @@ console.log("Hello World"); // Hello World
 | Util | It includes utility functions useful for programmers. |
 | Zlib | It is used to compress and decompress data. It can be accessed with require('zlib'). |
 
+
+> Top 5 module?
+
+1. os 
+2. fs 
+3. path 
+4. event 
+5. http
 
 > Node js most importent core module services and modules short discurtion
 
@@ -374,6 +357,24 @@ if (cluster.isMaster) {
   }).listen(8000);
 }
 
+```
+
+> Explain Buffer data type in Node.js?
+
+Node.js includes an additional data type called Buffer ( not available in browser's JavaScript ). Buffer is mainly used to store binary data, while reading from a file or receiving packets over the network.
+
+Example:
+
+```
+/**
+ * Buffer Data Type
+ */
+let b = new Buffer(10000);
+let str = "----------";
+
+b.write(str); 
+console.log( str.length ); // 10
+console.log( b.length ); // 10000
 ```
 
 > What is Node.js Process Model?
