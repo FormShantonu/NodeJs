@@ -94,19 +94,18 @@ When we emit a event that time we passing some argument is call event argument.
 > Single Threaded Event Loop Model Processing Steps
 
 Clients Send requests to the Web Server.
-* Node.js Web Server internally maintains a Limited Thread pool to provide services to the Client Requests.
-* Node.js Web Server receives those requests and places them into a Queue. It is known as Event Queue.
-* Node.js Web Server internally has a Component, known as Event Loop. Why it got this name is that it uses an indefinite loop to receive requests and process them.
-Event Loop uses Single Thread only. It is the main heart of the Node.js Platform Processing Model.
-Event Loop checks any Client Request is placed in the Event Queue. If no, then wait for incoming requests for indefinitely.
-If yes, then pick up one Client Request from the Event Queue
-Starts process that the Client Request
-If that Client Request Does Not require any Blocking IO Operations, then process everything, prepare the response and send it back to the client.
-If that Client Request requires some Blocking IO Operations like interacting with Database, File System, External Services then it will follow different approach
-Checks Threads availability from Internal Thread Pool
-Picks up one Thread and assign this Client Request to that thread.
-That Thread is responsible for taking that request, process it, perform Blocking IO operations, prepare response and send it back to the Event Loop
-Event Loop in turn, sends that Response to the respective Client.
+
+* When a client sends a request (e.g., HTTP request) to the Node.js server, receives it by the event loop.
+* Node.js does not create a separate thread for each request (unlike traditional multi-threaded servers like Apache).
+* If the request is synchronous, it is processed immediately in the Call Stack.If it is asynchronous (e.g., I/O operations like database queries or file reading), it is offloaded to libuv (Node.js's C++ library), which may use worker threads or the Event Queue.
+* When operations are delegated to libuv, the Event Loop continues processing other requests.
+* While waiting for an asynchronous task to complete, the callback function for that task is stored in the Event Queue (or Microtask Queue for Promises).
+* The Event Loop keeps checking the Call Stack, and when it is empty, it pushes the next task from the Event Queue to the Call Stack for execution.
+* When an async operation (like a DB query) finishes, its callback is moved to the Event Queue.
+* The Event Loop picks the next available task from the queue and executes it in the Call Stack.
+* There is a Microtask Queue for Promises and process.nextTick().
+* This queue has higher priority than the Event Queue.
+* Before moving to the next event in the Event Queue, Node.js first executes all Microtasks.
 
 > By default how many thread can use?
 
@@ -191,7 +190,6 @@ console.log("Hello World"); // Hello World
 | File System | It includes classes, methods, and events to work with file I/O. |
 | Util | It includes utility functions useful for programmers. |
 | Zlib | It is used to compress and decompress data. It can be accessed with require('zlib'). |
-
 
 > Top 5 module?
 
