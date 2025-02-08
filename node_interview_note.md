@@ -1664,6 +1664,50 @@ Here's an explanation of how OAuth 2.0 authentication system works:
   * Refresh tokens are long-lived credentials and should be kept secure, as they can be used to obtain new access tokens.
 
 
+> Why is node js single threaded?
+
+  Node.js can handle thousands of many tasks (or users) at the same time without slowing down, without creating a new thread for each request.This is achieved through its event-driven, non-blocking I/O model, which allows it to process multiple tasks asynchronously.
+
+  * Efficient Resource Usage: 
+    * Traditional multi-threaded servers (e.g., Java, PHP) spawn a new thread for each request, consuming significant memory and CPU.
+
+  * Non-Blocking Asynchronous Execution:
+    * Operations like file I/O, database queries, and network requests do not block the execution thread.
+    * Instead of waiting for a task to complete, Node.js continues processing other tasks, increasing performance.
+
+  * Event Loop & Callbacks:
+    * The event loop continuously listens for new tasks and executes them asynchronously.
+    * Callbacks, Promises, and async/await allow smooth handling of I/O-intensive operations without blocking.
+
+  * Scalability:
+    * Node.js can handle thousands of concurrent requests without running out of threads.
+    * Ideal for real-time applications like chat applications, APIs, and microservices.
+
+> How does it handle multiple process being single threaded?
+
+  Node.js is single-threaded, it multi-tasks efficiently using its event-driven, non-blocking I/O model.
+
+  1. Event Loop – The Heart of Node.js
+
+    Instead of creating new threads for each task, Node.js has an event loop that constantly listens for events and executes them asynchronously.
+     * Example:
+        Imagine a waiter (Node.js) in a restaurant taking multiple orders without waiting for one to be completed before taking the next. The kitchen (system resources) cooks the food, and when it's ready, the waiter serves it.
+
+  2. Non-Blocking I/O – No Waiting! 
+
+    Operations like database queries, file reading, and network requests don’t block execution. Instead, Node.js registers the task and moves on to the next one. When the task completes, a callback function executes.
+
+  3. Worker Threads (For CPU-Intensive Tasks)
+
+    While I/O tasks are non-blocking, CPU-heavy tasks (e.g., image processing, encryption) can block the main thread.To solve this, Node.js has Worker Threads, which allow parallel execution.
+
+> How many way to handel concurrency and parallelism in Node.js?
+
+  * For CPU-intensive tasks → Use worker_threads -> not use Multiple Processes.
+  * For running system commands or external scripts → Use child_process-> not Use Threads -> use Multiple Processes
+  * For handling high traffic in web servers → Use cluster -> not Use Threads -> use Multiple Processes
+  * For handling multiple async I/O tasks in one thread → Use Promise.all() or Promise.allSettled()-> not Use Threads -> not use Multiple Processes.
+
 ### Express js ###
 
 > Explain the purpose of the ExpressJS package.
@@ -1811,6 +1855,8 @@ In this example:
 * The myLogger middleware function logs the HTTP method and URL of each incoming request.
 * It is mounted globally using app.use() so that it applies to all routes.
 * It is also mounted specifically to the /api/users route, where it will only be executed for requests to that route.
+
+
 
 ## Rabit MQ ##
 
