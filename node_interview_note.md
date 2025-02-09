@@ -449,67 +449,6 @@ process.send('Hello from child!');
   * Designed for running separate Node.js scripts in child processes.
   * Sets up automatic communication channels (IPC) between the parent and child processes using the send method and the message event.
 
-> How to listen for the error event and handle errors that may occur during the execution of a child process.
-
-In Node.js, you can listen for the error event to handle errors that may occur during the execution of a child process. The error event is emitted when the child process cannot be spawned, or if it exits with a non-zero exit code.
-
-```
-const { spawn } = require('child_process');
-
-// Example: Trying to spawn a non-existent command
-const invalidCommand = spawn('nonexistentcommand');
-
-// Listen for the 'error' event
-invalidCommand.on('error', (err) => {
-  console.error(`Error occurred: ${err.message}`);
-});
-
-// Listen for the 'exit' event
-invalidCommand.on('exit', (code) => {
-  console.log(`Child process exited with code ${code}`);
-});
-
-```
-
-Here's a modified example that includes handling errors within the child process:
-Parent process:
-
-```
-const { fork } = require('child_process');
-
-const child = fork('child-script.js');
-
-child.on('message', (message) => {
-  if (message.error) {
-    console.error(`Error in child process: ${message.error}`);
-  } else {
-    console.log(`Message from child: ${message.data}`);
-  }
-});
-
-child.send('Hello from parent!');
-
-```
-Child process (child-script.js):
-
-```
-process.on('message', (message) => {
-  try {
-    // Simulate an error for demonstration purposes
-    if (message === 'simulateError') {
-      throw new Error('Simulated error in child process');
-    }
-
-    // Process the message or perform other tasks
-    process.send({ data: `Processed: ${message}` });
-  } catch (error) {
-    // Send the error back to the parent process
-    process.send({ error: error.message });
-  }
-});
-
-```
-
 ### NODE.JS FILE SYSTEM ###
 
 > How Node.js read the content of a file?
@@ -858,9 +797,13 @@ console.log(qdata); //  return 06
 ```
 ## Streams Module ##
 
+> What are Streams in Node.js?
+
+Streams in Node.js are objects that allow continuous reading/writing of data. They are useful for handling large data efficiently by processing chunks instead of loading the entire data into memory.
+
 > How many types of streams are present in node.js?
 
-streams are objects that allow you to handle data flow (reading, writing, or processing) in chunks rather than loading the entire data into memory. This makes streams memory-efficient and allows for processing large files or real-time data effectively.There are four types of streams
+There are four types of streams
 
 * Readable − Stream which is used for read operation.
 * Writable − Stream which is used for write operation.
@@ -878,56 +821,14 @@ Event:
 * pipe - Emitted when a readable stream is piped into a writable stream.
 * unpipe - Emitted when the readable stream is unpiped from the writable destination.
 
->1. Reading from a Stream:
+> What are some examples of Streams in Node.js?
 
-```
-const fs = require("fs");
-let data = "";
+* Readable Stream: fs.createReadStream('file.txt')
+* Writable Stream: fs.createWriteStream('file.txt')
+* Duplex Stream: net.Socket (for TCP communication)
+* Transform Stream: zlib.createGzip()
 
-// Create a readable stream
-const readerStream = fs.createReadStream("file.txt");
-
-// Set the encoding to be utf8.
-readerStream.setEncoding("UTF8");
-
-// Handle stream events --> data, end, and error
-readerStream.on("data", function (chunk) {
-  data += chunk;
-});
-
-readerStream.on("end", function () {
-  console.log(data);
-});
-
-readerStream.on("error", function (err) {
-  console.log(err.stack);
-});
-```
->2. Writing to a Stream:
-
-```
-const fs = require("fs");
-const data = "File writing to a stream example";
-
-// Create a writable stream
-const writerStream = fs.createWriteStream("file.txt");
-
-// Write the data to stream with encoding to be utf8
-writerStream.write(data, "UTF8");
-
-// Mark the end of file
-writerStream.end();
-
-// Handle stream events --> finish, and error
-writerStream.on("finish", function () {
-  console.log("Write completed.");
-});
-
-writerStream.on("error", function (err) {
-  console.log(err.stack);
-});
-```
->3. Piping the Streams:
+> Piping the Streams:
 
 Piping is a mechanism where we provide the output of one stream as the input to another stream. It is normally used to get data from one stream and to pass the output of that stream to another stream. There is no limit on piping operations.
 
@@ -944,7 +845,7 @@ const writerStream = fs.createWriteStream('output.txt');
 // read input.txt and write data to output.txt
 readerStream.pipe(writerStream);
 ```
->4. Chaining the Streams:
+> Chaining the Streams:
 
 Chaining is a mechanism to connect the output of one stream to another stream and create a chain of multiple stream operations. It is normally used with piping operations.
 ```
@@ -970,7 +871,51 @@ console.log("File Compressed.");
   * Ideal for applications dealing with large files or real-time data streams.
 
 4. Asynchronous:
-  * Streams operate asynchronously, fitting well with Node.js's non-blocking architecture. 
+  * Streams operate asynchronously, fitting well with Node.js's non-blocking architecture.
+
+> How do you handle errors in Streams?
+
+Error handling in streams is done using the .on('error', callback) event.
+
+  ```
+    const fs = require('fs');
+
+    const readableStream = fs.createReadStream('nonexistent.txt');
+
+    readableStream.on('error', (err) => {
+        console.error('Error:', err.message);
+    });
+
+  ```
+
+> What is highWaterMark in streams?
+
+" highWaterMark " is the buffer size limit for a stream before it starts controlling the flow.
+
+```
+const fs = require('fs');
+
+const readableStream = fs.createReadStream('largeFile.txt', { highWaterMark: 16 * 1024 }); // 16 KB buffer
+
+```
+
+> What is the difference between pause() and resume() in streams?
+
+* pause() → Stops reading data from the stream temporarily.
+* resume() → Resumes the stream reading.
+
+```
+  const fs = require('fs');
+
+  const readableStream = fs.createReadStream('file.txt');
+
+  readableStream.on('data', (chunk) => {
+      console.log('Received:', chunk);
+      readableStream.pause(); // Pause reading
+      setTimeout(() => readableStream.resume(), 1000); // Resume after 1 sec
+  });
+
+```
 
 > How to handle large data in Node.js?
 
@@ -1261,7 +1206,7 @@ Scaling Strategies
 
 Handling a large volume of requests (e.g., 1 billion hits on an API) in a Node.js application requires a combination of scaling strategies, architectural best practices, and optimization techniques. Here's a guide to effectively handle such high traffic:
 
-1. #### Use a Load Balancer ###
+1. ### Use a Load Balancer ###
 
   * Purpose: Distribute incoming requests across multiple server instances.
   * Options:
@@ -1532,6 +1477,7 @@ Stateless not a memory-intensive way and it gives a signature concept that gives
  3. JSON Web Tokens (JWTs): A compact, self-contained token format that contains payload data and claims.
  4. API Tokens: Issued to developers or applications to interact with APIs.
  5. MAC Tokens: Similar to bearer tokens but includes a cryptographic signature for each request.
+ 6. OAuth 2.0 Tokens: OAuth 2.0 is an authorization framework that uses several types of tokens to grant access to resources.
 
 > The flow of JWT token 
 
@@ -1579,16 +1525,20 @@ The header typically consists of two parts: the type of the token, which is JWT,
 
 The second part of the token is the payload, which contains the claims. Claims are statements about an entity (typically, the user) and additional data. There are three types of claims: registered, public, and private claims.
 
-  > Registered 
-A set of predefined claims that are not required but are recommended to be used to deliver useful and interoperable claims
+  > Registered
+
+  A set of predefined claims that are not required but are recommended to be used to deliver useful and interoperable claims
 
   > Public
-Custom claims that developers create to suit their specific needs
 
-  > private 
-Custom claims that developers define to share information between parties who agree to use them
+  Custom claims that developers create to suit their specific needs
+
+  > private
+
+  Custom claims that developers define to share information between parties who agree to use them
 
 > Signature
+
 Used to verify the sender of the token and to ensure that the message hasn't been changed
 
 > Benefits of Using JWT
@@ -1661,6 +1611,7 @@ Here's an explanation of how OAuth 2.0 authentication system works:
   * In some OAuth 2.0 flows, the authorization server may also issue a refresh token along with the access token. Refresh tokens can be used to obtain new access tokens without requiring the user to re-authenticate.
   * Refresh tokens are long-lived credentials and should be kept secure, as they can be used to obtain new access tokens.
 
+### Node JS Architecture ###
 
 > Why is node js single threaded?
 
@@ -1683,21 +1634,21 @@ Here's an explanation of how OAuth 2.0 authentication system works:
 
 > How does it handle multiple process being single threaded?
 
-  Node.js is single-threaded, it multi-tasks efficiently using its event-driven, non-blocking I/O model.
+Node.js is single-threaded, it multi-tasks efficiently using its event-driven, non-blocking I/O model.
 
-  1. Event Loop – The Heart of Node.js
+1. Event Loop – The Heart of Node.js
 
-    Instead of creating new threads for each task, Node.js has an event loop that constantly listens for events and executes them asynchronously.
-     * Example:
-        Imagine a waiter (Node.js) in a restaurant taking multiple orders without waiting for one to be completed before taking the next. The kitchen (system resources) cooks the food, and when it's ready, the waiter serves it.
+Instead of creating new threads for each task, Node.js has an event loop that constantly listens for events and executes them asynchronously.
+* Example:
+Imagine a waiter (Node.js) in a restaurant taking multiple orders without waiting for one to be completed before taking the next. The kitchen (system resources) cooks the food, and when it's ready, the waiter serves it.
 
-  2. Non-Blocking I/O – No Waiting! 
+2. Non-Blocking I/O – No Waiting! 
 
-    Operations like database queries, file reading, and network requests don’t block execution. Instead, Node.js registers the task and moves on to the next one. When the task completes, a callback function executes.
+Operations like database queries, file reading, and network requests don’t block execution. Instead, Node.js registers the task and moves on to the next one. When the task completes, a callback function executes.
 
-  3. Worker Threads (For CPU-Intensive Tasks)
+3. Worker Threads (For CPU-Intensive Tasks)
 
-    While I/O tasks are non-blocking, CPU-heavy tasks (e.g., image processing, encryption) can block the main thread.To solve this, Node.js has Worker Threads, which allow parallel execution.
+While I/O tasks are non-blocking, CPU-heavy tasks (e.g., image processing, encryption) can block the main thread.To solve this, Node.js has Worker Threads, which allow parallel execution.
 
 > How many way to handel concurrency and parallelism in Node.js?
 
