@@ -81,7 +81,7 @@ Clients Send requests to the Web Server.
 * When a client sends a request (e.g., HTTP request) to the Node.js server, receives it by the event loop.
 * Node.js does not create a separate thread for each request (unlike traditional multi-threaded servers like Apache).
 * If the request is synchronous, it is processed immediately in the Call Stack.If it is asynchronous (e.g., I/O operations like database queries or file reading), it is offloaded to libuv (Node.js's C++ library), which may use worker threads or the Event Queue.
-* When operations are delegated to libuv, the Event Loop continues processing other requests.
+* When operations are delegated to libuv, the Event Loop continues processing other client request requests.
 * While waiting for an asynchronous task to complete, the callback function for that task is stored in the Event Queue (or Microtask Queue for Promises).
 * The Event Loop keeps checking the Call Stack, and when it is empty, it pushes the next task from the Event Queue to the Call Stack for execution.
 * When an async operation (like a DB query) finishes, its callback is moved to the Event Queue.
