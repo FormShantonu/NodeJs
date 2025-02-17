@@ -246,7 +246,7 @@ const fullPath = path.join(__dirname, 'file.txt');
 console.log(fullPath);
 
 ```
-* Name of fumction is join(), resolve(), parsing(), formating().
+* Name of function is join(), resolve(), parsing(), formating().
 
 5. Events and name of some functionality
 
