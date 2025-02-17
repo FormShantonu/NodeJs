@@ -130,6 +130,13 @@ module2('Shantonu');
 
 ```
 
+> How many way to handel concurrency and parallelism in Node.js?
+
+  * For CPU-intensive tasks → Use worker_threads -> not use Multiple Processes.
+  * For running system commands or external scripts → Use child_process-> not Use Threads -> use Multiple Processes
+  * For handling high traffic in web servers → Use cluster -> not Use Threads -> use Multiple Processes
+  * For handling multiple async I/O tasks in one thread → Use Promise.all() or Promise.allSettled()-> not Use Threads -> not use Multiple Processes.
+
 > What type of module in Node?
 
 1. Core module
@@ -155,24 +162,6 @@ It is an inbuilt global object used to print to stdout and stderr.
 console.log("Hello World"); // Hello World
 
 ```
-> The following table lists some of the important core modules in Node.js.
-
-| Name | Description |
-| ---- |:-----------:|
-| Assert| It is used by Node.js for testing itself. It can be accessed with require('assert'). |
-| Buffer| It is used to perform operations on raw bytes of data which reside in memory. It can be accessed with require('buffer') |
-| Child Process | It is used by node.js for managing child processes. It can be accessed with require('child_process'). |
-| Cluster | This module is used by Node.js to take advantage of multi-core systems, so that it can handle more load. It can be accessed with require('cluster'). |
-| Console | It is used to write data to console. Node.js has a Console object which contains functions to write data to console. It can be accessed with require('console'). |
-| Crypto | It is used to support cryptography for encryption and decryption. It can be accessed with require('crypto'). |
-| HTTP | It includes classes, methods and events to create Node.js http server. |
-| URL | It includes methods for URL resolution and parsing. |
-| Query String | It includes methods to deal with query string. |
-| Path | It includes methods to deal with file paths. |
-| File System | It includes classes, methods, and events to work with file I/O. |
-| Util | It includes utility functions useful for programmers. |
-| Zlib | It is used to compress and decompress data. It can be accessed with require('zlib'). |
-
 > Top 5 module?
 
 1. os 
@@ -365,73 +354,36 @@ Node. js provides the facility to get process information such as process id, ar
 
 ### Node js child process ###
 
-There are four different ways to create a child process in Node: spawn(), fork(), exec(), and execFile()
+> What is the ```child_process``` module in Node.js?
 
-> Basic understanding of the concept of child process:
+The child_process module enables the creation of child processes in Node.js. It helps in executing system commands, running scripts, and managing multi-process execution.
 
-Node.js runs in a single thread. You can, however take advantage of multiple processes.
+> What are the different ways to create a child process?
 
-child_process module allows to create child processes in Node.js. Those processes can easily communicate with each other using a built-in messaging system.
+1. ``` spawn() ``` → Used for streaming large output.
+2. ``` exec()``` → Used for short-running commands (returns whole output as a buffer).
+3. ```execFile()``` → Directly executes a file without a shell.
+4. ```fork()``` → Creates a new Node.js process for IPC (Inter-Process Communication).
 
-Here are key points to understand about child processes in Node.js:
+> Difference between spawn() and exec()?
 
-* Spawning Processes: The child_process module in Node.js provides functions for creating and interacting with child processes. The spawn, exec, execFile, and fork functions are commonly used for this purpose.
-* `spawn`: This function is used to spawn a new process and is suitable for running commands in a shell. It returns a stream (EventEmitter) that provides access to the standard input, output, and error streams of the child process.
-* `exec` : This function is used to run a shell command in a subprocess. It buffers the output and provides it as a callback, making it convenient for running simpler commands.
-* `fork` : This function is a special case of spawn used specifically for creating new Node.js processes. It sets up inter-process communication (IPC) automatically, allowing parent and child processes to exchange messages.
-* Inter-Process Communication (IPC) : Child processes can communicate with the parent process and vice versa using a message-passing mechanism. The send method is used to send messages, and the message event is used to receive them.
+1. spawn() -> Returns stream (chunk by chunk), exec()-> Returns buffer (whole output)
+2. spawn() -> Best for Large outputs, exec()-> Best for small outputs
+3. spawn() -> Memory efficient, no buffer storage, exec()-> Memory uses memory (stores full output)
 
-> Explain the use of the spawn or fork functions from the child_process module
+> Difference between fork() and spawn()?
 
-1. `spawn` : The spawn function is used to launch a new process with the specified command. It is suitable for scenarios where you want to run an external command in a new process and have access to its standard input, output, and error streams.
+* ```fork()``` is specifically designed for Node.js processes and supports Inter-Process Communication (IPC).
+* ```spawn()``` can run any command, but it does not have built-in IPC.
 
-```
-const { spawn } = require('child_process');
-const ls = spawn('ls', ['-l']);
+> What is the difference between execFile() and exec()?
 
-ls.stdout.on('data', (data) => {
-  console.log(`stdout: ${data}`);
-});
+* ```execFile()``` directly executes a binary/script without using a shell, making it more secure and faster.
+* ```exec()``` runs the command inside a shell, which allows for piping (|), but can be a security risk.
 
-ls.stderr.on('data', (data) => {
-  console.error(`stderr: ${data}`);
-});
+> When to use fork()?
 
-ls.on('close', (code) => {
-  console.log(`child process exited with code ${code}`);
-});
-
-```
-* Key Points: 
-  * Provides streaming access to the standard input, output, and error of the spawned process.
-  * Suitable for running commands that don't require communication with the Node.js process itself.
-
-2. `fork` : The fork function is a special case of spawn that is specifically designed for spawning new Node.js processes. It is used when you want to run a separate Node.js script as a child process, and it sets up inter-process communication (IPC) automatically.
-
-Parent process:
-```
-const { fork } = require('child_process');
-const child = fork('child.js');
-
-child.on('message', (message) => {
-  console.log(`Message from child: ${message}`);
-});
-
-child.send('Hello from parent!');
-
-```
-Child process (child.js):
-```
-process.on('message', (message) => {
-  console.log(`Message from parent: ${message}`);
-});
-
-process.send('Hello from child!');
-
-```
-* Key Points:
-  * Designed for running separate Node.js scripts in child processes.
-  * Sets up automatic communication channels (IPC) between the parent and child processes using the send method and the message event.
+Use fork() when you need Node.js-to-Node.js communication, such as handling CPU-heavy tasks.
 
 ### NODE.JS FILE SYSTEM ###
 
@@ -1633,13 +1585,6 @@ Operations like database queries, file reading, and network requests don’t blo
 3. Worker Threads (For CPU-Intensive Tasks)
 
 While I/O tasks are non-blocking, CPU-heavy tasks (e.g., image processing, encryption) can block the main thread.To solve this, Node.js has Worker Threads, which allow parallel execution.
-
-> How many way to handel concurrency and parallelism in Node.js?
-
-  * For CPU-intensive tasks → Use worker_threads -> not use Multiple Processes.
-  * For running system commands or external scripts → Use child_process-> not Use Threads -> use Multiple Processes
-  * For handling high traffic in web servers → Use cluster -> not Use Threads -> use Multiple Processes
-  * For handling multiple async I/O tasks in one thread → Use Promise.all() or Promise.allSettled()-> not Use Threads -> not use Multiple Processes.
 
 ### Express js ###
 
