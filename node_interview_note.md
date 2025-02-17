@@ -31,65 +31,48 @@ The Node.js runtime is the software stack responsible for installing your web se
 
 > What is  event-driven in node js?
 
-"Event-driven" means actions are triggered by specific events, like a user clicking a button or a sensor detecting motion. It's a way systems respond to occurrences rather than following a fixed sequence.
+It is a programming paradigm where the flow of execution is determined by events, rather than sequential execution. Node.js uses an event loop and callbacks to handle asynchronous operations efficiently.
 
-In JavaScript, event-driven programming is based on the concept of callbacks. A callback is a function passed as an argument to another function and  executed when a certain event occurs. For example, a web application might have a function  called when the user clicks a button. This function would execute a callback when the "click" event occurs.
+> What is the role of the EventEmitter class in Node.js?
 
-* Benefits:
-  1. Asynchronous operations: Efficiently handles tasks without blocking the main process.
-  2. Scalability: Can handle high loads by distributing event processing across multiple processes or machines.
-  3. Real-time updates: Enables applications to respond immediately to changes in data or user interactions.
-
-* Key components:
-  1. Event emitter : A machanism that generates and emits events.
-  2. Event listener : A function that is executed when a specific event occurs.
-  3. Event queue : A data structure that stores events waiting to be processed.
-  4. Event loop : A machanism that continuously checks the event queue and executes the appropriate listeners.
-
-* Event Types : 
-  1. System events: e.g., 'exit', 'error'.
-  2. Custom events: Created by developers to represent specific actions or conditions within their applications.
-
-* Event listeners:
-  1. Registered using the on() method: emitter.on('event_name', listenerFunction);
-
-* Event emission:
-  1. Triggered using the emit() method: emitter.emit('event_name', arg1, arg2, ...);
-
-* Example:
-
-  '''
-    const EventEmitter = require('events');
-
-    class MyEmitter extends EventEmitter {}
-
-    const myEmitter = new MyEmitter();
-
-    myEmitter.on('event', (arg1, arg2) => {
-        console.log('An event occurred!');
-        console.log(arg1, arg2);
-    });
-
-    myEmitter.emit('event', 'Hello', 'world');
-  '''
-
-In this example:
-
-  1. MyEmitter is a custom event emitter class
-  2. An event listener is attached to the 'event' event.
-  3. The 'event' is emitted with arguments 'Hello' and 'world'.
-  4. The event listener is executed, printing the arguments to the console.
-
-* Key points to remember:
-
-  1. Event-driven architecture is a powerful paradigm for building scalable, responsive applications.
-  2. Node.js provides a built-in EventEmitter class for creating and managing events.
-  3. Events are fundamental to the asynchronous nature of Node.js.
-  4. By understanding events and event-driven principles, you can effectively leverage the power of Node.js for building efficient and scalable applications.
+EventEmitter (from the events module) is used to create, listen to, and handle custom events.
 
 >What is event argument?
 
 When we emit a event that time we passing some argument is call event argument.
+
+> How do you create and handle a custom event in Node.js?
+
+```
+const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+myEmitter.on('greet', (name) => {
+    console.log(`Hello, ${name}!`);
+});
+
+myEmitter.emit('greet', 'Alice');
+
+```
+
+> What is the difference between on and once in EventEmitter?
+
+* .on(event, callback): Listens to an event multiple times.
+* .once(event, callback): Listens only once, then removes itself.
+
+> What is the Event Loop in Node.js?
+
+The event loop is the core mechanism in Node.js that allows non-blocking I/O. It continuously checks the event queue and executes pending tasks asynchronously.
+
+> What is the difference between setImmediate and process.nextTick?
+
+* process.nextTick(): Executes immediately after the current operation, before the event loop continues.
+* setImmediate(): Runs callbacks in the check phase (after I/O).
+
+> How does Node.js handle asynchronous operations under the hood?
+
+* I/O operations to libuv, CPU-bound tasks to worker threads
+* Non-blocking tasks like setTimeout, setImmediate, and process.nextTick are scheduled based on event loop phases.
 
 > Single Threaded Event Loop Model Processing Steps
 
