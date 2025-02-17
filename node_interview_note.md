@@ -196,6 +196,8 @@ readableStream.pipe(writableStream);
 
 ```
 
+* functionality : Readable Streams  ``` fs.createReadStream() ```, Writable Streams ``` fs.createWriteStream() ```, Duplex Streams ``` net.Socket ```, Transform Streams ``` zlib.createGzip() ```
+
 2. HTTP/HTTPS and name of some functionality
 
 * Purpose: Create web servers and handle HTTP/HTTPS requests and responses.
