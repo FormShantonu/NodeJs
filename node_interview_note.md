@@ -384,116 +384,76 @@ The child_process module enables the creation of child processes in Node.js. It 
 > When to use fork()?
 
 Use fork() when you need Node.js-to-Node.js communication, such as handling CPU-heavy tasks.
-
 ### NODE.JS FILE SYSTEM ###
 
-> How Node.js read the content of a file?
+> What is the fs module in Node.js?
 
-The "normal" way in Node.js is probably to read in the content of a file in a non-blocking, asynchronous way. That is, to tell Node to read in the file, and then to get a callback when the file-reading has been finished. That would allow us to handle several requests in parallel.
+The fs module is a built-in module in Node.js that interaction with the file system. It supports both synchronous and asynchronous operations.
 
-Common use for the File System module:
+> How do you write to a file in Node.js?
 
-Read files
-* Create files
-* Update files
-* Delete files
-* Rename files
+```writeFile()``` or ```writeFileSync()``` blocks the execution until the file is written.
 
-> Read Files
+> How do you read a file in Node.js?
 
-The fs.readFile() method is used to read files on your computer.
-
-Example: Read Files
+There are two ways to read files: Asynchronous ```(fs.readFile())``` and Synchronous ```(fs.readFileSync())```.
 
 ```
-<!-- index.html -->
-<html>
-<body>
-  <h1>File Header</h1>
-  <p>File Paragraph.</p>
-</body>
-</html>
-```
-
-```
-/**
- * read_file.js
- */
-const http = require('http');
 const fs = require('fs');
-http.createServer(function (req, res) {
-  fs.readFile('index.html', function(err, data) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(data);
-    res.end();
-  });
-}).listen(3000);
-```
-> Creat File:
 
-The File System module has methods for creating new files:
-
-* fs.appendFile()
-* fs.open()
-* fs.writeFile()
-
-The fs.appendFile() method appends specified content to a file. If the file does not exist, the file will be created:
-
-```
-var fs = require('fs');
-
-fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
-  if (err) throw err;
-  console.log('Saved!');
+fs.readFile('example.txt', 'utf8', (err, data) => {
+    if (err) console.error(err);
+    else console.log(data);
 });
+
+or
+
+const data = fs.readFileSync('example.txt', 'utf8');
+console.log(data);
+
+
 ```
 
-The fs.open() method takes a "flag" as the second argument, if the flag is "w" for "writing", the specified file is opened for writing. If the file does not exist, an empty file is created:
+> How do you append data to an existing file?
+
+Use fs.appendFile() (Async) or fs.appendFileSync() (Sync).
 
 ```
-var fs = require('fs');
-
-fs.open('mynewfile2.txt', 'w', function (err, file) {
-  if (err) throw err;
-  console.log('Saved!');
+fs.appendFile('example.txt', '\nNew line added!', (err) => {
+    if (err) console.error(err);
+    else console.log('Data appended successfully');
 });
-```
-
-The fs.writeFile() method replaces the specified file and content if it exists. If the file does not exist, a new file, containing the specified content, will be created:
 
 ```
-var fs = require('fs');
 
-fs.writeFile('mynewfile3.txt', 'Hello content!', function (err) {
-  if (err) throw err;
-  console.log('Saved!');
+> How do you delete a file in Node.js?
+
+Use fs.unlink() (Async) or fs.unlinkSync() (Sync).
+
+```
+fs.unlink('example.txt', (err) => {
+    if (err) console.error(err);
+    else console.log('File deleted successfully');
 });
-```
-
-> Update Files
-
-The File System module has methods for updating files:
-
-fs.appendFile()
-fs.writeFile()
-
-> Delete Files
-To delete a file with the File System module,  use the fs.unlink() method.
-
-The fs.unlink() method deletes the specified file:
 
 ```
-var fs = require('fs');
 
-fs.unlink('mynewfile2.txt', function (err) {
-  if (err) throw err;
-  console.log('File deleted!');
-});
+> How do you check if a file exists?
+
+Use ```fs.existsSync()```.
+
+```
+if (fs.existsSync('example.txt')) {
+    console.log('File exists');
+} else {
+    console.log('File does not exist');
+}
+
 ```
 
 > Rename Files
 
-To rename a file with the File System module,  use the fs.rename() method.
+To rename a file with the File System module,  use the ```fs.rename()``` method.
 
 The fs.rename() method renames the specified file:
 
@@ -505,6 +465,108 @@ fs.rename('mynewfile1.txt', 'myrenamedfile.txt', function (err) {
   console.log('File Renamed!');
 });
 ```
+## HTTP Module ##
+
+Node.js has a built-in module called HTTP, which allows Node.js to transfer data over the Hypertext Transfer Protocol (HTTP).
+
+To include the HTTP module, use the require() method:
+
+```
+var http = require('http');
+```
+
+* Node.js as a Web Server :
+
+The HTTP module can create an HTTP server that listens to server ports and gives a response back to the client.
+
+Use the createServer() method to create an HTTP server:
+
+```
+var http = require('http');
+// create a server object
+
+http.createServer(function(req,res){
+  res.write('Hello world');
+  res.end();
+}).listen(3000);
+```
+
+Save the code above in a file called "demo_http.js", and initiate the file:
+
+* Add an HTTP Header :
+
+If the response from the HTTP server is supposed to be displayed as HTML, you should include an HTTP header with the correct content type:
+
+```
+var http = require('http');
+
+http.createServer(function(req,res){
+  res.writeHead(200,{'Contain-type':'text/html'});
+  res.write('Hello World');
+  res.end();
+});
+
+```
+
+Read the Query String :
+
+The function passed into the http.createServer() has a req argument that represents the request from the client, as an object (http.IncomingMessage object).
+
+```
+var http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write(req.url);
+  res.end();
+}).listen(8080);
+```
+> What is the difference between HTTP and HTTPS?
+
+1. Security
+  * HTTP: Data is sent in plain text, making it vulnerable to attacks.
+  * HTTPS: Encrypts data using SSL/TLS, making it secure.
+
+2. Port Number
+
+  * HTTP uses port 80 by default.
+  * HTTPS uses port 443 by default.
+
+3. Authentication & Trust:
+
+  * HTTP does not verify the identity of the website.
+  * HTTPS requires an SSL/TLS certificate from a trusted Certificate Authority (CA).
+
+> When to Use HTTPS?
+
+Always! Especially for sensitive data like login pages, payment gateways, and API communications.
+
+> What is CORS (Cross-Origin Resource Sharing) and how do you enable it in Node.js?
+
+CORS (Cross-Origin Resource Sharing) is a security mechanism that allows or restricts web applications running on one domain to request resources from another domain.
+
+* How to Enable CORS in Node.js?
+
+  Method 1: Using the cors package
+
+  Method 4: Manually Set CORS Headers
+
+
+## URL Module ##
+
+> What is the url module in Node.js?
+
+The url module provides utilities for URL resolution and parsing. It allows you to work with URLs by breaking them into components like hostname, pathname, query parameters, etc.
+
+>How do you import the url module in Node.js?
+
+```
+import { URL } from 'url';
+
+```
+> What is the difference between url.parse() and the URL constructor?
+
+* url.parse() is used in older versions of Node.js.It returns a URL object 
+* The URL constructor (WHATWG URL API) provides a more modern way to work with URLs.
 
 ## Cluster modules ##
 
@@ -576,6 +638,7 @@ if (cluster.isMaster) {
 * Worker Process:
     * Creates an HTTP server that responds with "Hello World" on port 8000.
     * Logs that the worker process has started.
+    
 > Benefits of Using Cluster Module
 
 1. Improved Performance: By utilizing all available CPU cores, the application can handle more requests.
@@ -590,147 +653,6 @@ if (cluster.isMaster) {
 
 The Cluster module is powerful for scaling Node.js applications on multi-core systems, ensuring better performance and reliability.
 
-## HTTP Module ##
-
-Node.js has a built-in module called HTTP, which allows Node.js to transfer data over the Hypertext Transfer Protocol (HTTP).
-
-To include the HTTP module, use the require() method:
-
-```
-var http = require('http');
-```
-
-Node.js as a Web Server :
-
-The HTTP module can create an HTTP server that listens to server ports and gives a response back to the client.
-
-Use the createServer() method to create an HTTP server:
-
-```
-var http = require('http');
-// create a server object
-
-http.createServer(function(req,res){
-  res.write('Hello world');
-  res.end();
-}).listen(3000);
-```
-
-Save the code above in a file called "demo_http.js", and initiate the file:
-
-```
-C:\Users\Your Name>node demo_http.js
-```
-
-Add an HTTP Header :
-
-If the response from the HTTP server is supposed to be displayed as HTML, you should include an HTTP header with the correct content type:
-
-```
-var http = require('http');
-
-http.createServer(function(req,res){
-  res.writeHead(200,{'Contain-type':'text/html'});
-  res.write('Hello World');
-  res.end();
-});
-
-```
-
-Read the Query String :
-
-The function passed into the http.createServer() has a req argument that represents the request from the client, as an object (http.IncomingMessage object).
-
-```
-var http = require('http');
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.write(req.url);
-  res.end();
-}).listen(8080);
-```
-
-> HTTP module call third party api with GET request :
-
-The http module is a built-in module in Node.js that allows you to make HTTP requests and build HTTP servers.
-
-Here is an example of how to make a GET request using the http module:
-
-```
-var http = require('http');
-
-http.get('http://api.example.com',(res)=>{
-    let data = '';
-    res.on('data',(chunk)=>{
-        data+=chunk;
-    });
-    res.on('end',()=>{
-        console.log(Json.parse(data));
-    });
-}).on('error',(error)=>{
-    console.log(error);
-});
-```
-
-> How to make a POST request using the http module ?
-
-```
-var http = require('http');
-
-var option = {
-    method:"POST",
-    header: {"Content-type":"application/json"}
-}
-
-const req =  http.request('http://api.example.com',option,(res)=>{
-    let data = '';
-    res.on('data',(chunk)=>{
-        data+=chunk;
-    });
-    
-    res.on('end',()=>{
-        console.log(JSON.parse(data));
-    })
-});
-
-var postData = JSON.stringify({
-    name:'shantonu',
-    email:'chowdhury.shan@gmail.com'
-});
-
-req.write(postData);
-req.end();
-```
-
-To send data in the POST request, we use the .write() method to write the data to the request stream and then call .end() to complete the request. In this example, we're sending JSON data in the request body.
-
-## URL Module ##
-
-The Built-in URL Module :
-
-The URL module splits up a web address into readable parts.
-
-To include the URL module, use the require() method:
-
-```
-var url = require('url');
-```
-Parse an address with the url.parse() method, and it will return a URL object with each part of the address as properties:
-
-```
-var url = require('url');
-var adr = 'http://localhost:3000/default.htm?year=2022&month=06';
-var parseData = url.parse(adr);
-
-console.log(parseData.host);
-
-console.log(parseData.pathname)
-
-console.log(parseData.search);
-
-var qdata = q.query; // return object {year:2022, month:06}
-console.log(qdata); //  return 06
-```
 ## Streams Module ##
 
 > What are Streams in Node.js?
