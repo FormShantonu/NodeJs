@@ -78,17 +78,16 @@ The event loop is the core mechanism in Node.js that allows non-blocking I/O. It
 
 Clients Send requests to the Web Server.
 
-* When a client sends a request (e.g., HTTP request) to the Node.js server, receives it by the event loop.
+* A client request is first received by Node.js’s internal C++ bindings, which then pass it to JavaScript callbacks via the Event Queue.
 * Node.js does not create a separate thread for each request (unlike traditional multi-threaded servers like Apache).
-* If the request is synchronous, it is processed immediately in the Call Stack.If it is asynchronous (e.g., I/O operations like database queries or file reading), it is offloaded to libuv (Node.js's C++ library), which may use worker threads or the Event Queue.
-* When operations are delegated to libuv, the Event Loop continues processing other client request requests.
-* While waiting for an asynchronous task to complete, the callback function for that task is stored in the Event Queue (or Microtask Queue for Promises).
-* The Event Loop keeps checking the Call Stack, and when it is empty, it pushes the next task from the Event Queue to the Call Stack for execution.
-* When an async operation (like a DB query) finishes, its callback is moved to the Event Queue.
-* The Event Loop picks the next available task from the queue and executes it in the Call Stack.
-* There is a Microtask Queue for Promises and process.nextTick().
-* This queue has higher priority than the Event Queue.
+* If the request is synchronous, it is processed in the Call Stack.
+* If it is asynchronous (e.g., I/O operations like database queries or file reading), it is offloaded to libuv (Node.js's C++ library), which may use worker threads or the Event Queue.
+* While waiting for the async task to complete, the callback is stored in the Event Queue.
+* The Event Loop continues processing other requests while the async task is in progress.
+
+* When an async operation (like a DB query) finishes, If it is a Microtask then it is added to the Microtask Queue. Otherwise, it is added to the Event Queue.
 * Before moving to the next event in the Event Queue, Node.js first executes all Microtasks.
+* The Event Loop goes through different phases: Timers Phase -> I/O Callbacks Phase -> Idle, Prepare Phase -> Poll Phase -> Check Phase -> Close Callbacks Phase
 
 > By default how many thread can use?
 
@@ -96,7 +95,7 @@ Clients Send requests to the Web Server.
 
 > What is chrome v8 engine?
 
-V8 is a C++ based open-source JavaScript engine developed by Google. It was originally designed for Google Chrome and Chromium-based browsers ( such as Brave ) in 2008, it parses and executes JavaScript code.
+V8 is a C/C++ based open-source JavaScript engine developed by Google. It was originally designed for Google Chrome and Chromium-based browsers ( such as Brave ) in 2008, it parses and executes JavaScript code.
 
 > How V8 compiles JavaScript code?
 
