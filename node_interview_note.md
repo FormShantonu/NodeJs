@@ -10,7 +10,7 @@ Node. js is a platform built on Chrome's JavaScript runtime for easily building 
 
 >What Disadvantage of node js?
 
-When we require some CUP processing task like video editing application, this type of application singel threads can't perfrom well so for node js we avoid it.
+When we require some CPU processing task like video editing application, this type of application singel threads can't perfrom well so for node js we avoid it.
 
 > What does the runtime environment mean in Node.js?
 
@@ -31,7 +31,7 @@ The Node.js runtime is the software stack responsible for installing your web se
 
 > What is  event-driven in node js?
 
-It is a programming paradigm where the flow of execution is determined by events, rather than sequential execution. Node.js uses an event loop and callbacks to handle asynchronous operations efficiently.
+Node.js follows an event-driven architecture, meaning it reacts to events rather than following a sequential execution flow. It uses an Event Loop and an event-driven, non-blocking I/O model to handle multiple operations efficiently.
 
 > What is the role of the EventEmitter class in Node.js?
 
