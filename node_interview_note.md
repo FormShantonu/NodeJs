@@ -64,6 +64,28 @@ myEmitter.emit('greet', 'Alice');
 
 The event loop is the core mechanism in Node.js that allows non-blocking I/O. It continuously checks the event queue and executes pending tasks asynchronously.
 
+> What is process.nextTick()?
+
+```process.nextTick()``` is a method in Node.js that schedules a callback function to be executed in the next iteration of the event loop, before any I/O operations or timers.
+
+> How process.nextTick() Works?
+
+* It places the callback at the front of the event loop queue, giving it higher priority than setImmediate(), setTimeout(), and setInterval().
+* It is used for deferring execution but ensuring it happens before I/O operations or timers.
+
+> process.nextTick() syntext?
+
+```
+console.log("Start");
+
+process.nextTick(() => {
+    console.log("Next Tick Callback");
+});
+
+console.log("End");
+
+```
+
 > What is the difference between setImmediate and process.nextTick?
 
 * process.nextTick(): Executes immediately after the current operation, before the event loop continues.
