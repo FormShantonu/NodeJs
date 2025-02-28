@@ -1146,6 +1146,30 @@ Handling a large volume of requests (e.g., 1 billion hits on an API) in a Node.j
     * Request per second (RPS).
     * CPU and memory usage.
 
+> How securing a REST API in Node js
+
+Securing a REST API is crucial to prevent unauthorized access, data leaks, and other security threats. My approach to API security would involve multiple layers, covering authentication, authorization, data protection, and secure coding practices.
+
+1. Authentication & Authorization
+  - Use JWT (JSON Web Token) or OAuth 2.0 for secure authentication.
+  - Implement Role-Based Access Control (RBAC) to restrict permissions.
+2. Data Protection
+  - Use HTTPS (TLS/SSL) to encrypt data in transit.
+  - Hash passwords with bcrypt or argon2.
+  - Mask sensitive data in logs and responses.
+3. Request Validation & Rate Limiting
+  - Validate and sanitize inputs (e.g., express-validator) to prevent SQL Injection, XSS.
+  - Implement rate limiting (express-rate-limit) to prevent brute-force attacks.
+4. CORS & CSRF Protection
+  - Configure CORS policies to allow only trusted origins.
+  - Use CSRF tokens for state-changing operations.
+5. Secure Deployment
+  - Use Docker security best practices (non-root user, minimal images).
+6. Secure API Endpoints
+  - Use API keys for third-party access.
+  - Prevent Mass Assignment by allowing only specific fields in updates.
+  - Disable stack traces in production errors.
+
 ### Node js Error Handel ###
 
 > How we can handle error in node js?
