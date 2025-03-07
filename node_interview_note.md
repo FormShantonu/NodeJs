@@ -1554,6 +1554,17 @@ Operations like database queries, file reading, and network requests don’t blo
 
 While I/O tasks are non-blocking, CPU-heavy tasks (e.g., image processing, encryption) can block the main thread.To solve this, Node.js has Worker Threads, which allow parallel execution.
 
+## Request flow and response base on project lavel
+
+The flow of a request and response for an endpoint in this application works as follows:
+
+A client sends a request to an endpoint defined in the route file (e.g., /admin/users/list). The Express app (app.js) routes the request to the appropriate route handler, which applies a series of middleware functions. These middleware functions authenticate the request (e.g., validating a JWT token), check user permissions, and validate input data. If any middleware fails, it returns an error response immediately (e.g., 401, 403, or 400).
+
+If all middleware passes, the request reaches the controller (e.g., adminController). The controller processes the request, deciding whether database interaction is needed (using models like AdminUserModel) or other logic (e.g., email sending, token generation). After completing its tasks, the controller constructs a response dataset and uses helper methods (e.g., successStatusBuild) to format the response body, which is standardized across the app.
+
+The response then flows back through any remaining middleware (e.g., error handlers) and is sent to the client by Express. The response body structure, including fields like status and dataset, is defined dynamically by helper functions in CommonHelper.js, not in a single static declaration.
+
+
 ### Express js ###
 
 > Explain the purpose of the ExpressJS package.
