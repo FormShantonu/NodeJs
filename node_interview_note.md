@@ -946,21 +946,25 @@ Let's implement our first RESTful API listUsers using the following code in a se
 
 ```
   const express = require('express');
-  const app = express();
-  const fs = require('fs');
+const app = express();
+const port = 3000;
 
-  app.get('/user-list',function(req,res){
-    fs.readFile(_dirname+"/"+"users.json","utf8",function(err,data){
-      console.log(data);
-      res.end(data);
-    })
-  });
+// Fake users data (in real case you'd pull from DB)
+const users = [
+  { id: 1, name: "Shantonu", email: "shantonu@example.com" },
+  { id: 2, name: "Ananya", email: "ananya@example.com" },
+  { id: 3, name: "Ravi", email: "ravi@example.com" }
+];
 
-  const server = app.listen(3000,function(){
-    const Host = server.address().host;
-    const Port = server.address().port;
-    console.log(`Server running on host ${Host} and port ${Port}`);
-  });
+// GET /users - list all users
+app.get('/users', (req, res) => {
+  res.json(users);
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+
 ```
 
 Add User ( POST method )
@@ -970,14 +974,38 @@ Following API will show you how to add new user in the list.
 ```
 const express = require('express');
 const app = express();
-const fs = require('fs');
+const port = 3000;
 
-post('/add-user', function(req,res){
-  fs.readFile(_dirname+"/users.json","utf8",function(err,data){
-    const data = JSON.parse(data);
-    data['user4'] = req.body;
-    req.end(JSON.stringify(data));
-  });
+// Middleware to parse JSON body
+app.use(express.json());
+
+// Fake users data (in-memory for now)
+let users = [
+  { id: 1, name: "Shantonu", email: "shantonu@example.com" },
+  { id: 2, name: "Ananya", email: "ananya@example.com" },
+  { id: 3, name: "Ravi", email: "ravi@example.com" }
+];
+
+// POST /users - add a new user
+app.post('/users', (req, res) => {
+  const { name, email } = req.body;
+
+  if (!name || !email) {
+    return res.status(400).json({ error: "Name and email are required" });
+  }
+
+  const newUser = {
+    id: users.length + 1, // simple id generator
+    name,
+    email
+  };
+
+  users.push(newUser);
+  res.status(201).json(newUser); // send back created user
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
 
 ```
