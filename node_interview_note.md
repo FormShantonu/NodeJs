@@ -1574,6 +1574,12 @@ If the access token expires:
 
 If we include sensitive data like username or email in a JWT payload, it’s a security risk because the payload is base64-encoded, not encrypted—anyone can decode it. The right approach is to minimize the payload to just a user ID (sub) and fetch sensitive data from the server after verifying the token. Alternatively, we can encrypt the data with AES or use JWE to encrypt the entire payload. This keeps sensitive info secure while still using JWT effectively.
 
+> jsonwebtoken Functions
+
+jwt.sign() Creates a new JWT token with given payload and secret/key.
+jwt.verify() Verifies token authenticity and returns payload if valid.
+jwt.decode() Decodes the payload without verification (unsafe for auth).
+
 > O'auth2 mechanism for authentication system
 
 OAuth 2.0 is a popular authorization framework that is widely used for securing APIs and implementing authentication mechanisms in web and mobile applications. When implementing OAuth 2.0 in a Node.js authentication system, you typically follow these steps:
